@@ -20,16 +20,16 @@ typedef struct s_map
 	struct s_map	*down;
 }	t_map;
 
-t_map	*new_space(t_map *previous)
+t_map	*new_space(t_map *previous, int x, int y, int z)
 {
 	t_map	*space;
 
 	space = malloc(sizeof(t_map) * 1);
 	if (!space)
 		return (NULL);
-	space->x = 0;
-	space->y = 0;
-	space->z = 0;
+	space->x = x;
+	space->y = y;
+	space->z = z;
 	space->line = NULL;
 	space->next = NULL;
 	space->previous = previous;
@@ -46,7 +46,6 @@ t_map	*first_space(t_map *space)
 		return (NULL);
 	while (space->previous)
 	{
-		// ft_printf("%s \n", space->line);
 		space = space->previous;
 	}
 	return (space);
@@ -82,15 +81,17 @@ t_lines	*first_line(t_lines *line)
 int main(void)
 {
 	int 	o;
-	// t_map	*space;
+	t_map	*space;
 	t_lines	*line;
 	char	*str;
-	size_t	i;
+	size_t	x;
+	size_t	y;
 
-	i = 0;
+	x = 0;
+	y = 0;
 	str = NULL;
 	line = new_line(NULL);
-	// space = new_space(NULL);
+	space = NULL;
 	o = open("./extra/maps/test_maps/10-70.fdf", O_RDONLY);
 	if (o != -1)
 	{
@@ -106,7 +107,7 @@ int main(void)
 
 	while (line->next)
 	{
-		line->splits = ft_split(line->line, ' '); 
+		line->splits = ft_split(ft_strtrim(line->line, "\n"), ' '); 
 		line = line->next;
 	}
 
@@ -114,16 +115,26 @@ int main(void)
 
 	while (line->next)
 	{
-		while (line->splits[i])
+		while (line->splits[y])
 		{
-			ft_printf("%s ", line->splits[i]);
-			i++;
+			space = new_space(space, x, y, ft_atoi(line->splits[y]));
+			ft_printf("%s ", line->splits[y]);
+			y++;
 		}
 		ft_printf("\n");
-		i = 0;
+		x++;
+		y = 0;
 		line = line->next;
 	}
 
+	space = first_space(space);
+
+	while (space->next)
+	{
+		ft_printf("[%d, %d, %d] \n", space->x, space->y, space->z);
+		space = space->next;
+	}
+	ft_printf("[%d, %d, %d] \n", space->x, space->y, space->z);
 
 	return (0);
 }
