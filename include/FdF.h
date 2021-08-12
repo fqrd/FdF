@@ -17,8 +17,8 @@
 # define RED 0xFF0000
 # define GREEN 0x00FF00
 # define BLUE 0X0000FF
-# define WINDOW_X 500
-# define WINDOW_Y 500
+# define WINDOW_X 1024
+# define WINDOW_Y 650
 
 typedef struct s_lmlx
 {
@@ -30,6 +30,8 @@ typedef struct	s_lines
 {
 	char 			*line;
 	char			**splits;
+	size_t			nsplits;
+	size_t			nlines;
 	struct s_lines	*previous;
 	struct s_lines	*next;
 }	t_lines;
@@ -40,6 +42,8 @@ typedef struct s_map
 	int				x;
 	int				y;
 	int				z;
+	size_t			max_x;
+	size_t			max_y;
 	struct s_map	*next;
 	struct s_map	*previous;
 	struct s_map	*up;
@@ -47,5 +51,9 @@ typedef struct s_map
 }	t_map;
 
 t_map	*parse(char *map);
+
+
+size_t  array_length(char **array);
+size_t  count_list(t_lines  *line);
 
 #endif

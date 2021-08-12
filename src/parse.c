@@ -1,6 +1,6 @@
 #include "../include/FdF.h"
 
-static t_map	*new_map(t_map *previous, int x, int y, int z)
+static t_map	*new_map(t_map *previous, int x, int y, int z, size_t max_y, size_t max_x)
 {
 	t_map	*map;
 
@@ -15,6 +15,8 @@ static t_map	*new_map(t_map *previous, int x, int y, int z)
 	map->previous = previous;
 	map->up = NULL;
 	map->down = NULL;
+	map->max_x = max_x;
+	map->max_y = max_y;
 	if (previous)
 		previous->next = map;
 	return (map);
@@ -73,7 +75,7 @@ static t_lines	*get_lines(char *map, t_lines *line)
 	return (first_line(line));
 }
 
-static t_lines	*split_lines(t_lines *line)
+static t_lines	*split_lines(t_lines *line, size_t nlines)
 {
 	char *temp;
 
@@ -84,6 +86,8 @@ static t_lines	*split_lines(t_lines *line)
 		if (!temp)
 			return (NULL);
 		line->splits = ft_split(temp, ' ');
+		line->nsplits = array_length(line->splits);
+		line->nlines = nlines;
 		if (!line->splits)
 			return (NULL);
 		free(temp);
@@ -102,28 +106,21 @@ static t_map	*map_init(t_lines *line, t_map *map)
 	y = 0;
 	while (line->next)
 	{
-		while (line->splits[y])
+		while (line->splits[x])
 		{
-			map = new_map(map, x, y, ft_atoi(line->splits[y]));
-			ft_printf("%s ", line->splits[y]);
-			y++;
+			map = new_map(map, x, y, ft_atoi(line->splits[x]), line->nlines, line->nsplits);
+			ft_printf("%s ", line->splits[x]);
+			x++;
 		}
 		ft_printf("\n");
-		x++;
-		y = 0;
+		y++;
+		x = 0;
 		line = line->next;
 	}
 	return (first_space(map));
 }
 
-/**
-	char 			*line;
-	char			**splits;
-	struct s_lines	*previous;
-	struct s_lines	*next;
-*/
-
-static void	loop_clear(t_lines **line)
+static void		loop_clear(t_lines **line)
 {
 	size_t i;
 	t_lines *tmp;
@@ -148,7 +145,7 @@ static void	loop_clear(t_lines **line)
 	}
 }
 
-t_map	*parse(char *src)
+t_map			*parse(char *src)
 {
 	t_lines	*line;
 	t_map	*map;
@@ -156,9 +153,9 @@ t_map	*parse(char *src)
 	map = NULL;
 	line = new_line(NULL);
 	line = get_lines(src, line);
-	line = split_lines(line);
+	line = split_lines(line, count_list(first_line(line)));
 	map = map_init(line, map);
-	line = first_line(line);
+	// line = first_line(line);
 	loop_clear(&line);
 	free(line);
 	line = NULL;
