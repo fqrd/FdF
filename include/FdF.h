@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:46:06 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/12 11:51:32 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/12 22:19:09 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,23 @@ typedef struct s_map
 }	t_map;
 
 t_map	*parse(char *map);
+void    draw_canvas(t_lmlx *lmlx, size_t x, size_t y);
 
 
 size_t  array_length(char **array);
 size_t  count_list(t_lines  *line);
+
+
+// lines
+t_lines	*new_line(t_lines *previous);
+t_lines *first_line(t_lines *line);
+t_lines	*get_lines(char *map, t_lines *line);
+t_lines	*split_lines(t_lines *line, size_t nlines);
+void	line_clear(t_lines **line);
+
+// maps
+t_map	*new_map(t_map *previous, size_t max_y, size_t max_x);
+t_map   *first_space(t_map *map);
+t_map	*map_init(t_lines *line, t_map *map);
 
 #endif

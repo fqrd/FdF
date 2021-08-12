@@ -1,5 +1,14 @@
-// gcc src/*.c -L./libs/minilibx-linux -lmlx -lXext -lX11 -lbsd -L./libs/_libft -lft && ./a.out
-// gcc src/*.c -L./libs/minilibx-linux -lmlx -lXext -lX11 -lbsd -L./libs/_libft -lft && valgrind --leak-check=full -s ./a.out
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/12 21:48:25 by fcaquard          #+#    #+#             */
+/*   Updated: 2021/08/12 22:23:26 by fcaquard         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/FdF.h"
 
@@ -34,40 +43,6 @@ t_lmlx	*lmlx_init(void)
 	return (lmlx);
 }
 
-void draw_canvas(t_lmlx *lmlx)
-{
-	size_t	y;
-	size_t	x;
-
-	y = 0;
-	x = 0;
-	while(y < WINDOW_Y)
-	{
-		if (y > 50 && y < WINDOW_Y - 50)
-		{
-			while (x < WINDOW_X)
-			{
-				if (x == 50 || x == WINDOW_X - 50)
-					mlx_pixel_put(lmlx->mlx, lmlx->window, x, y, GREEN);
-				x++;
-			}
-			x = 0;
-		}
-		if (y == 50 || y == WINDOW_Y - 50)
-		{
-			while (x < WINDOW_X)
-			{
-				if (x >= 50 && x <= WINDOW_X - 50)
-					mlx_pixel_put(lmlx->mlx, lmlx->window, x, y, GREEN);
-				x++;
-			}
-			x = 0;
-		}
-		y++;
-	}
-}
-
-
 int	main(void)
 {
 	t_lmlx	*lmlx;
@@ -80,13 +55,12 @@ int	main(void)
 	map = parse("./maps/basictest.fdf");
 	while (map->next)
 	{
-		// ft_printf("[x: %d/%d, y: %d/%d, %d] \n", map->x, map->max_x, map->y, map->max_y, map->z);
-		// mlx_pixel_put(lmlx->mlx, lmlx->window, map->x, map->y, GREEN);
 		map = map->next;
 	}
-	// mlx_pixel_put(lmlx->mlx, lmlx->window, map->x, map->y, GREEN);
-	draw_canvas(lmlx);
-	// ft_printf("[x: %d/%d, y: %d/%d, %d] \n", map->x, map->max_x, map->y, map->max_y, map->z);
+	draw_canvas(lmlx, 0, 0);
 	mlx_loop(lmlx->mlx);
 	return (0);
 }
+
+	// mlx_pixel_put(lmlx->mlx, lmlx->window, map->x, map->y, GREEN);
+	// ft_printf("[x: %d/%d, y: %d/%d, %d] \n", map->x,  map->max_x, map->y, map->max_y, map->z);
