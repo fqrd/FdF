@@ -1,4 +1,4 @@
-// gcc main.c parse.c -L../libs/minilibx-linux -lmlx -lXext -lX11 -lbsd -L../libs/_libft -lft && ./a.out
+// gcc src/*.c -L./libs/minilibx-linux -lmlx -lXext -lX11 -lbsd -L./libs/_libft -lft && ./a.out
 
 #include "../include/FdF.h"
 
@@ -41,7 +41,7 @@ int	main(void)
 	lmlx->mlx = mlx_init();
 	lmlx->window = mlx_new_window(lmlx->mlx, 800, 600, "FdF");
 	mlx_key_hook(lmlx->window, &input_hook, lmlx);
-	parse("../maps/basictest.fdf");
+	parse("./maps/basictest.fdf");
 	mlx_loop(lmlx->mlx);
 	return (0);
 }

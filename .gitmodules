@@ -4,4 +4,3 @@
 [submodule "libs/_libft"]
 	path = libs/_libft
 	url = git@github.com:fqrd/_libft.git
-
