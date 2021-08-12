@@ -36,12 +36,21 @@ t_lmlx	*lmlx_init(void)
 int	main(void)
 {
 	t_lmlx	*lmlx;
+	t_map	*map;
 
 	lmlx = lmlx_init();
 	lmlx->mlx = mlx_init();
-	lmlx->window = mlx_new_window(lmlx->mlx, 800, 600, "FdF");
+	lmlx->window = mlx_new_window(lmlx->mlx, WINDOW_X, WINDOW_Y, "FdF");
 	mlx_key_hook(lmlx->window, &input_hook, lmlx);
-	parse("./maps/basictest.fdf");
+	map = parse("./maps/basictest.fdf");
+	while (map->next)
+	{
+		ft_printf("[%d, %d, %d] \n", map->x, map->y, map->z);
+		mlx_pixel_put(lmlx->mlx, lmlx->window, map->x, map->y, GREEN);
+		map = map->next;
+	}
+	mlx_pixel_put(lmlx->mlx, lmlx->window, map->x, map->y, GREEN);
+	ft_printf("[%d, %d, %d] \n", map->x, map->y, map->z);
 	mlx_loop(lmlx->mlx);
 	return (0);
 }

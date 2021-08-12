@@ -14,6 +14,11 @@
 # define FDF_H
 # include "../libs/_libft/include/libft.h"
 # include "../libs/minilibx-linux/mlx.h"
+# define RED 0xFF0000
+# define GREEN 0x00FF00
+# define BLUE 0X0000FF
+# define WINDOW_X 500
+# define WINDOW_Y 500
 
 typedef struct s_lmlx
 {
@@ -41,6 +46,6 @@ typedef struct s_map
 	struct s_map	*down;
 }	t_map;
 
-int parse(char *map);
+t_map	*parse(char *map);
 
 #endif
