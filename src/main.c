@@ -41,7 +41,7 @@ int	main(void)
 	lmlx->mlx = mlx_init();
 	lmlx->window = mlx_new_window(lmlx->mlx, 800, 600, "FdF");
 	mlx_key_hook(lmlx->window, &input_hook, lmlx);
-	parse("../extra/test_maps/basictest.fdf");
+	parse("../maps/basictest.fdf");
 	mlx_loop(lmlx->mlx);
 	return (0);
 }
