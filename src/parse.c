@@ -1,26 +1,6 @@
-#include "./_libft/include/libft.h"
+#include "../include/FdF.h"
 
-typedef struct	s_lines
-{
-	char 			*line;
-	char			**splits;
-	struct s_lines	*previous;
-	struct s_lines	*next;
-}	t_lines;
-
-typedef struct s_map
-{
-	char 			*line;
-	int				x;
-	int				y;
-	int				z;
-	struct s_map	*next;
-	struct s_map	*previous;
-	struct s_map	*up;
-	struct s_map	*down;
-}	t_map;
-
-t_map	*new_space(t_map *previous, int x, int y, int z)
+static t_map	*new_space(t_map *previous, int x, int y, int z)
 {
 	t_map	*space;
 
@@ -40,7 +20,7 @@ t_map	*new_space(t_map *previous, int x, int y, int z)
 	return (space);
 }
 
-t_map	*first_space(t_map *space)
+static t_map	*first_space(t_map *space)
 {
 	if (!space)
 		return (NULL);
@@ -51,7 +31,7 @@ t_map	*first_space(t_map *space)
 	return (space);
 }
 
-t_lines	*new_line(t_lines *previous)
+static t_lines	*new_line(t_lines *previous)
 {
 	t_lines	*line;
 
@@ -66,7 +46,7 @@ t_lines	*new_line(t_lines *previous)
 	return (line);
 }
 
-t_lines	*first_line(t_lines *line)
+static t_lines	*first_line(t_lines *line)
 {
 	if (!line)
 		return (NULL);
@@ -77,10 +57,9 @@ t_lines	*first_line(t_lines *line)
 	return (line);
 }
 
-
-int main(void)
+int	parse(char *map)
 {
-	int 	o;
+	int		o;
 	t_map	*space;
 	t_lines	*line;
 	char	*str;
@@ -92,27 +71,24 @@ int main(void)
 	str = NULL;
 	line = new_line(NULL);
 	space = NULL;
-	o = open("./extra/maps/test_maps/10-70.fdf", O_RDONLY);
+	o = open(map, O_RDONLY);
 	if (o != -1)
 	{
 		str = get_next_line(o);
 		while (str)
-		{   
+		{
 			line->line = str;
 			line = new_line(line);
 			str = get_next_line(o);
 		}
 	}
 	line = first_line(line);
-
 	while (line->next)
 	{
-		line->splits = ft_split(ft_strtrim(line->line, "\n"), ' '); 
+		line->splits = ft_split(ft_strtrim(line->line, "\n"), ' ');
 		line = line->next;
 	}
-
 	line = first_line(line);
-
 	while (line->next)
 	{
 		while (line->splits[y])
@@ -126,15 +102,12 @@ int main(void)
 		y = 0;
 		line = line->next;
 	}
-
 	space = first_space(space);
-
 	while (space->next)
 	{
 		ft_printf("[%d, %d, %d] \n", space->x, space->y, space->z);
 		space = space->next;
 	}
 	ft_printf("[%d, %d, %d] \n", space->x, space->y, space->z);
-
 	return (0);
 }
