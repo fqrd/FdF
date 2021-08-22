@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:46:06 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/12 22:19:09 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/22 19:11:10 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 # define FDF_H
 # include "../libs/_libft/include/libft.h"
 # include "../libs/minilibx-linux/mlx.h"
+# include <math.h>
 # define RED 0xFF0000
 # define GREEN 0x00FF00
 # define BLUE 0X0000FF
 # define WINDOW_X 1024
 # define WINDOW_Y 650
+# define BORDER 50
 
 typedef struct s_lmlx
 {
@@ -51,7 +53,9 @@ typedef struct s_map
 }	t_map;
 
 t_map	*parse(char *map);
-void    draw_canvas(t_lmlx *lmlx, size_t x, size_t y);
+void	draw_canvas(t_lmlx *lmlx, size_t x, size_t y, size_t bordersize);
+void	draw_middleline(t_lmlx *lmlx);
+
 
 
 size_t  array_length(char **array);
@@ -69,5 +73,10 @@ void	line_clear(t_lines **line);
 t_map	*new_map(t_map *previous, size_t max_y, size_t max_x);
 t_map   *first_space(t_map *map);
 t_map	*map_init(t_lines *line, t_map *map);
+
+
+// array_test
+char	**parse_array(char *src);
+char	 **clearsplits(char **split);
 
 #endif
