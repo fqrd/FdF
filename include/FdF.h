@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:46:06 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/22 19:11:10 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/22 22:55:12 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_map
 }	t_map;
 
 t_map	*parse(char *map);
+t_map	*link_ridges(t_map *map);
 void	draw_canvas(t_lmlx *lmlx, size_t x, size_t y, size_t bordersize);
 void	draw_middleline(t_lmlx *lmlx);
 
@@ -71,7 +72,7 @@ void	line_clear(t_lines **line);
 
 // maps
 t_map	*new_map(t_map *previous, size_t max_y, size_t max_x);
-t_map   *first_space(t_map *map);
+t_map   *rewind_map(t_map *map);
 t_map	*map_init(t_lines *line, t_map *map);
 
 

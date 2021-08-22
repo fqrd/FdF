@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:47:51 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/22 19:29:28 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/22 22:53:10 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ void	draw_middleline(t_lmlx *lmlx)
 	x = 0;
 	while (x < WINDOW_X)
 	{
-		if (x >= BORDER && x <= WINDOW_X - BORDER)
-		{
+		// if (x >= BORDER && x <= WINDOW_X - BORDER)
+		// {
 			mlx_pixel_put(lmlx->mlx, lmlx->window, x, WINDOW_Y/2, BLUE);
-		}
+		// }
 		x++;
 	}
 }

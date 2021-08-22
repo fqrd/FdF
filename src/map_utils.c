@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 22:07:27 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/12 22:18:51 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/22 22:36:35 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_map	*new_map(t_map *previous, size_t max_y, size_t max_x)
 	return (map);
 }
 
-t_map	*first_space(t_map *map)
+t_map	*rewind_map(t_map *map)
 {
 	if (!map)
 		return (NULL);
@@ -47,18 +47,28 @@ t_map	*map_init(t_lines *line, t_map *map)
 {
 	size_t	x;
 	size_t	y;
+	t_map *link;
 
 	x = 0;
 	y = 0;
+	link = NULL;
 	while (line->next)
 	{
 		while (line->splits[x])
 		{
+
 			map = new_map(map, line->nlines, line->nsplits);
 			map->x = x;
 			map->y = y;
 			map->z = ft_atoi(line->splits[x]);
 			ft_printf("%s ", line->splits[x]);
+			if (x == 0)
+			{
+				map->up = link;
+				if (map->up)
+					map->up->down = map;
+				link = map;
+			}
 			x++;
 		}
 		ft_printf("\n");
@@ -66,5 +76,5 @@ t_map	*map_init(t_lines *line, t_map *map)
 		x = 0;
 		line = line->next;
 	}
-	return (first_space(map));
+	return (rewind_map(map));
 }

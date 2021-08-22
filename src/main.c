@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:48:25 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/22 19:42:38 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/22 23:15:30 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int	main(void)
 {
 	t_lmlx	*lmlx;
 	t_map	*map;
-	char **array;
-	size_t space;
+
+
 
 	lmlx = lmlx_init();
 	lmlx->mlx = mlx_init();
@@ -56,16 +56,26 @@ int	main(void)
 	mlx_key_hook(lmlx->window, &input_hook, lmlx);
 	// map = parse("./maps/basictest.fdf");
 	map = parse("./maps/10-70.fdf");
-	// draw_canvas(lmlx, 0, 0, BORDER);
+		// map = parse("./maps/square.fdf");
+	draw_canvas(lmlx, 0, 0, BORDER);
 	draw_middleline(lmlx);
 
+	size_t x;
+	size_t y;
+	size_t canvas;
+	size_t space;
 
-	space = ((WINDOW_X - (2 * BORDER)) / map->max_x);
+	x = 0;
+	y = 0;
+	canvas = WINDOW_X - (2 * BORDER);
+
 
 	while (map->next)
 	{
-
-		mlx_pixel_put(lmlx->mlx, lmlx->window, BORDER + ((space * map->x) + map->y), (WINDOW_Y/2) - map->z, GREEN);
+		space = (canvas / map->max_x) / (map->y + 1);
+		x = ((WINDOW_X - (space * map->max_x)) / 2) + space * map->x;
+		y = ((WINDOW_Y / 2) - map->z) / (map->y + 1);
+		mlx_pixel_put(lmlx->mlx, lmlx->window, x, y, GREEN);
 		ft_printf("[x: %d/%d, y: %d/%d, %d] \n", map->x,  map->max_x, map->y, map->max_y, map->z);
 		map = map->next;
 	}

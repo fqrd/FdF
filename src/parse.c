@@ -6,11 +6,28 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:48:03 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/12 22:13:57 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/22 23:00:13 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/FdF.h"
+
+t_map	*link_ridges(t_map *map)
+{
+	while (map->next)
+	{
+		if (map->x != (int) map->max_x)
+		{
+			if (map->down)
+				map->next->down = map->down->next;
+			if (map->up)
+				map->next->up = map->up->next;
+		}
+		map = map->next;
+	}
+
+	return (rewind_map(map));
+}
 
 t_map	*parse(char *src)
 {
@@ -25,5 +42,6 @@ t_map	*parse(char *src)
 	line_clear(&line);
 	free(line);
 	line = NULL;
+	map = link_ridges(map);
 	return (map);
 }
