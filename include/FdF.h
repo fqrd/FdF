@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:46:06 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/23 18:32:28 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/23 18:49:02 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef struct s_lmlx
 	void *window;
 	struct s_map *map;
 	int	elevation;
+	int	distance;
+	double angle;
 	int	base_y;
 	int top;
 	int left;

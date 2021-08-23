@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 11:25:13 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/23 18:32:11 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/23 18:49:37 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void draw(t_map *map, t_lmlx *lmlx)
 	if (!coords)
 		exit(0);
 
-	coords->distance = 35;
-	coords->height = atan(0.57) * coords->distance;
+	coords->distance = lmlx->distance;
+	coords->height = atan(lmlx->angle) * coords->distance;
 	coords->elevation = lmlx->elevation;
 
 	while (map->next)
@@ -54,16 +54,11 @@ void draw(t_map *map, t_lmlx *lmlx)
 			getCoords(map->next, &coords->x1, &coords->y1, &coords);
 			bresenham(lmlx->left + coords->x, lmlx->top + coords->y, lmlx->left + coords->x1, lmlx->top + coords->y1, lmlx);
 		}
-		if (map->up)
+		if (map->down)
 		{
-			getCoords(map->up, &coords->x1, &coords->y1, &coords);
-			// printf("(%d:%d,%d:%d) h: %f, d: %d\n", coords->x1, coords->x, coords->y1, coords->y, coords->height, coords->distance);
+			getCoords(map->down, &coords->x1, &coords->y1, &coords);
 			bresenham(lmlx->left + coords->x, lmlx->top + coords->y, lmlx->left + coords->x1, lmlx->top + coords->y1, lmlx);
-			// bresenham(coords->x, coords->y, coords->x1, coords->y1, lmlx);
-			// getCoords(map->next, &coords->x, &coords->y, &coords);
-			// bresenham(lmlx->left + coords->x, lmlx->top + coords->y, lmlx->left + coords->x1, lmlx->top + coords->y1, lmlx);
 		}
-		// mlx_pixel_put(lmlx->mlx, lmlx->window, coords->x, coords->y, GREEN);
 		// mlx_pixel_put(lmlx->mlx, lmlx->window, coords->x, coords->y, GREEN);
 		map = map->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:48:25 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/23 18:33:48 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/23 18:53:05 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,42 +36,70 @@ int	input_hook(int key, void *params)
 	// UP
 	if (key == 65362)
 	{
-		lmlx->top-=10;
+		lmlx->top+=10;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
 		draw(lmlx->map, lmlx);
 	}
 	// DOWN
 	if (key == 65364)
 	{
-		lmlx->top+=10;
+		lmlx->top-=10;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
 		draw(lmlx->map, lmlx);
 	}
 	// RIGHT
 	if (key == 65363)
 	{
-		lmlx->left+=10;
+		lmlx->left-=10;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
 		draw(lmlx->map, lmlx);
 	}
 	// LEFT
 	if (key == 65361)
 	{
-		lmlx->left-=10;
+		lmlx->left+=10;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
 		draw(lmlx->map, lmlx);
 	}
 	// +
-	if (key == 65451)
+	if (key == 61)
 	{
 		lmlx->elevation+=1;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
 		draw(lmlx->map, lmlx);
 	}
 	// -
-	if (key == 65453)
+	if (key == 41)
 	{
 		lmlx->elevation-=1;
+		mlx_clear_window(lmlx->mlx, lmlx->window);
+		draw(lmlx->map, lmlx);
+	}
+	// +
+	if (key == 65451)
+	{
+		lmlx->distance+=1;
+		mlx_clear_window(lmlx->mlx, lmlx->window);
+		draw(lmlx->map, lmlx);
+	}
+	// -
+	if (key == 65453)
+	{
+		lmlx->distance-=1;
+		mlx_clear_window(lmlx->mlx, lmlx->window);
+		draw(lmlx->map, lmlx);
+	}
+	// Turn q
+	if (key == 113)
+	{
+		lmlx->angle+=0.1;
+		mlx_clear_window(lmlx->mlx, lmlx->window);
+		draw(lmlx->map, lmlx);
+	}
+	// TURN d
+	if (key == 100)
+	{
+		lmlx->angle-=0.1;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
 		draw(lmlx->map, lmlx);
 	}
@@ -88,6 +116,8 @@ t_lmlx	*lmlx_init(void)
 
 	lmlx->base_y = WINDOW_Y / 2;
 	lmlx->elevation = 5;
+	lmlx->distance = 12;
+	lmlx->angle = 0.57;
 	lmlx->top = 0;
 	lmlx->left = 0;
 	return (lmlx);
