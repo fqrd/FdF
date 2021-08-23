@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:48:25 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/23 18:53:05 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/24 00:39:49 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,40 +36,40 @@ int	input_hook(int key, void *params)
 	// UP
 	if (key == 65362)
 	{
-		lmlx->top+=10;
+		lmlx->top+=25;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
 		draw(lmlx->map, lmlx);
 	}
 	// DOWN
 	if (key == 65364)
 	{
-		lmlx->top-=10;
+		lmlx->top-=25;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
 		draw(lmlx->map, lmlx);
 	}
 	// RIGHT
 	if (key == 65363)
 	{
-		lmlx->left-=10;
+		lmlx->left-=25;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
 		draw(lmlx->map, lmlx);
 	}
 	// LEFT
 	if (key == 65361)
 	{
-		lmlx->left+=10;
+		lmlx->left+=25;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
 		draw(lmlx->map, lmlx);
 	}
 	// +
-	if (key == 61)
+	if (key == 41)
 	{
 		lmlx->elevation+=1;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
 		draw(lmlx->map, lmlx);
 	}
 	// -
-	if (key == 41)
+	if (key == 61)
 	{
 		lmlx->elevation-=1;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
@@ -92,14 +92,16 @@ int	input_hook(int key, void *params)
 	// Turn q
 	if (key == 113)
 	{
-		lmlx->angle+=0.1;
+		lmlx->angle+=0.02;
+		printf("angle: %f\n", lmlx->angle);
 		mlx_clear_window(lmlx->mlx, lmlx->window);
 		draw(lmlx->map, lmlx);
 	}
 	// TURN d
 	if (key == 100)
 	{
-		lmlx->angle-=0.1;
+		lmlx->angle-=0.02;
+		printf("angle: %f\n", lmlx->angle);
 		mlx_clear_window(lmlx->mlx, lmlx->window);
 		draw(lmlx->map, lmlx);
 	}
@@ -113,11 +115,18 @@ t_lmlx	*lmlx_init(void)
 	lmlx = malloc(sizeof(t_lmlx) * 1);
 	if (!lmlx)
 		return (NULL);
-
-	lmlx->base_y = WINDOW_Y / 2;
-	lmlx->elevation = 5;
+	if (WINDOW_Y == WINDOW_X)
+		lmlx->base = WINDOW_Y / 2;
+	else
+	{
+		if (WINDOW_Y > WINDOW_X)
+			lmlx->base = WINDOW_X / 2;
+		else
+			lmlx->base = WINDOW_Y / 2;
+	}
+	lmlx->elevation = 1;
 	lmlx->distance = 12;
-	lmlx->angle = 0.57;
+	lmlx->angle = -0.2;
 	lmlx->top = 0;
 	lmlx->left = 0;
 	return (lmlx);
@@ -130,9 +139,10 @@ int	main(void)
 	lmlx->mlx = mlx_init();
 	lmlx->window = mlx_new_window(lmlx->mlx, WINDOW_X, WINDOW_Y, "FdF");
 	mlx_key_hook(lmlx->window, &input_hook, lmlx);
-	lmlx->map = parse("./maps/42.fdf");
+	// lmlx->map = parse("./maps/42.fdf");
 	// lmlx->map = parse("./maps/10-70.fdf");
-	// lmlx->map = parse("./maps/test.fdf");
+	// lmlx->map = parse("./maps/julia.fdf");
+	lmlx->map = parse("./maps/elem-col.fdf");
 	// lmlx->map = parse("./maps/mars.fdf");
 
 	// draw_canvas(lmlx, 0, 0, BORDER);

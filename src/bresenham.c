@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 10:12:47 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/23 10:42:02 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/24 00:45:22 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	bresenham_high(int x0, int y0, int x1, int y1, t_lmlx *lmlx)
 	y = y0;
 	while (y <= y1)
 	{
-		mlx_pixel_put(lmlx->mlx, lmlx->window, x, y, GRAY);
+		mlx_pixel_put(lmlx->mlx, lmlx->window, x, y, DEFAULTCOLOR);
 		if (D > 0)
 		{
 			x += xi;
@@ -50,12 +50,12 @@ void	bresenham_high(int x0, int y0, int x1, int y1, t_lmlx *lmlx)
 
 void	bresenham_low(int x0, int y0, int x1, int y1, t_lmlx *lmlx)
 {
-	int dx;
-	int dy;
-	int yi;
-	int D;
-	int x;
-	int y;
+	int	dx;
+	int	dy;
+	int	yi;
+	int	D;
+	int	x;
+	int	y;
 
     dx = x1 - x0;
     dy = y1 - y0;
@@ -71,7 +71,7 @@ void	bresenham_low(int x0, int y0, int x1, int y1, t_lmlx *lmlx)
 	x = x0;
 	while (x <= x1)
 	{
-		mlx_pixel_put(lmlx->mlx, lmlx->window, x, y, GRAY);
+		mlx_pixel_put(lmlx->mlx, lmlx->window, x, y, DEFAULTCOLOR);
 		if (D > 0)
 		{
 			y += yi;

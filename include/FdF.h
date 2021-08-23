@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:46:06 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/23 18:49:02 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/24 00:49:12 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,18 @@
 # define FDF_H
 # include "../libs/_libft/include/libft.h"
 # include "../libs/minilibx-linux/mlx.h"
+
 # include <math.h>
-
-
 # include <stdio.h>
-
 
 # define RED 0xFF0000
 # define GREEN 0x00FF00
 # define BLUE 0X0000FF
 # define WHITE 0XFFFFFF
 # define GRAY 0X93827F
+# define DEFAULTCOLOR GRAY
 
-# define WINDOW_X 1050
+# define WINDOW_X 1024
 # define WINDOW_Y 800
 
 typedef struct s_lmlx
@@ -37,11 +36,10 @@ typedef struct s_lmlx
 	int	elevation;
 	int	distance;
 	double angle;
-	int	base_y;
+	int	base;
 	int top;
 	int left;
 }	t_lmlx;
-
 
 typedef struct s_coords
 {
@@ -52,6 +50,7 @@ typedef struct s_coords
 	int distance;
 	double height;
 	int elevation;
+	int base;
 }	t_coords;
 
 typedef struct	s_lines
@@ -70,6 +69,7 @@ typedef struct s_map
 	int				x;
 	int				y;
 	int				z;
+	long				color;
 	size_t			max_x;
 	size_t			max_y;
 	struct s_map	*next;
@@ -77,7 +77,6 @@ typedef struct s_map
 	struct s_map	*up;
 	struct s_map	*down;
 }	t_map;
-
 
 void	draw_canvas(t_lmlx *lmlx, size_t x, size_t y, size_t bordersize);
 void	draw_middleline(t_lmlx *lmlx);

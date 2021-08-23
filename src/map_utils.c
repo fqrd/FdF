@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 22:07:27 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/22 22:36:35 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/24 00:50:10 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_map	*new_map(t_map *previous, size_t max_y, size_t max_x)
 	map->x = 0;
 	map->y = 0;
 	map->z = 0;
+	map->color = DEFAULTCOLOR;
 	map->line = NULL;
 	map->next = NULL;
 	map->previous = previous;
@@ -43,11 +44,37 @@ t_map	*rewind_map(t_map *map)
 	return (map);
 }
 
+
+int	extractColor(t_map **map, char *str)
+{
+	char **split;
+	int i;
+
+	i = 0;
+	split = ft_split(str, ',');
+	if (!split)
+		return (-1);
+
+		
+	(*map)->z = ft_atoi(split[0]);
+	(*map)->color = (long) split[1];
+
+	while (split[i])
+	{
+		free(split[i]);
+		split[i] = NULL;
+		i++;
+	}
+	free(split);
+	split = NULL;
+	return (1);
+}
+
 t_map	*map_init(t_lines *line, t_map *map)
 {
 	size_t	x;
 	size_t	y;
-	t_map *link;
+	t_map	*link;
 
 	x = 0;
 	y = 0;
@@ -56,12 +83,16 @@ t_map	*map_init(t_lines *line, t_map *map)
 	{
 		while (line->splits[x])
 		{
-
 			map = new_map(map, line->nlines, line->nsplits);
 			map->x = x;
 			map->y = y;
-			map->z = ft_atoi(line->splits[x]);
-			ft_printf("%s ", line->splits[x]);
+			if (ft_charpos(line->splits[x], ',') > 0)
+			{
+				if (extractColor(&map, line->splits[x]) == -1)
+					return (NULL);
+			}
+			else
+				map->z = ft_atoi(line->splits[x]);
 			if (x == 0)
 			{
 				map->up = link;
