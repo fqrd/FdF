@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 22:07:27 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/24 19:35:41 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/24 21:41:46 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ t_map	*rewind_map(t_map *map)
 		map = map->previous;
 	return (map);
 }
-
 
 int	extractColor(t_map **map, char *str)
 {

@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 22:05:22 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/12 22:21:09 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/24 22:27:32 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ t_lines	*get_lines(char *map, t_lines *line)
 {
 	int		o;
 	char	*str;
+	int i;
 
+	i = 0;
 	str = NULL;
 	o = open(map, O_RDONLY);
 	if (o != -1)
@@ -48,31 +50,30 @@ t_lines	*get_lines(char *map, t_lines *line)
 		str = get_next_line(o);
 		while (str)
 		{
+			i++;
 			line->line = str;
 			line = new_line(line);
+			line->number = i;
 			str = get_next_line(o);
 		}
 	}
-	return (first_line(line));
+	return (line);
 }
 
 t_lines	*split_lines(t_lines *line, size_t nlines)
 {
-	char	*temp;
+	size_t	nsplits;
 
-	temp = NULL;
+	nsplits = 0;
 	while (line->next)
 	{
-		temp = ft_strtrim(line->line, "\n");
-		if (!temp)
-			return (NULL);
-		line->splits = ft_split(temp, ' ');
-		line->nsplits = array_length(line->splits);
-		line->nlines = nlines;
+		line->splits = ft_split(line->line, ' ');
 		if (!line->splits)
 			return (NULL);
-		free(temp);
-		temp = NULL;
+		line->nlines = nlines;
+		if (nsplits == 0)
+			nsplits = array_length(line->splits);
+		line->nsplits = nsplits;
 		line = line->next;
 	}
 	return (first_line(line));

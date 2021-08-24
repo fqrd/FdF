@@ -6,21 +6,11 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:48:25 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/24 21:38:49 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/24 21:57:58 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/FdF.h"
-
-void	input_esc(t_lmlx *lmlx)
-{
-	ft_printf("ESC\n");
-	if (lmlx)
-	{
-		mlx_destroy_window(lmlx->mlx, lmlx->window);
-		exit(0);
-	}
-}
 
 int	input_hook(int key, void *params)
 {
@@ -48,7 +38,7 @@ int	input_hook(int key, void *params)
 	return (0);
 }
 
-void	getWindowCenter(t_lmlx **lmlx)
+static void	getWindowCenter(t_lmlx **lmlx)
 {
 	if (WINDOW_Y == WINDOW_X)
 	{
@@ -90,6 +80,9 @@ int	main(int argc, char **argv)
 {
 	t_lmlx	*lmlx;
 
+	// debug
+	clock_t begin = clock();
+
 	if (argc != 2)
 		return (0);
 	lmlx = lmlx_init();
@@ -98,8 +91,29 @@ int	main(int argc, char **argv)
 	lmlx->mlx = mlx_init();
 	lmlx->window = mlx_new_window(lmlx->mlx, WINDOW_X, WINDOW_Y, "FdF");
 	mlx_key_hook(lmlx->window, &input_hook, lmlx);
+	
+	// debug
+	clock_t end = clock();
+	double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+	printf("time spent prior parsing: %f\n", time_spent);
+	begin = clock();
+	
 	lmlx->map = parse(argv[1]);
+
+	// debug
+	end = clock();
+	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+	printf("time spent parsing: %f\n", time_spent);
+	begin = clock();
+
 	loop_draw(lmlx->map, lmlx);
+
+	//debug
+	end = clock();
+	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+	printf("time spent drawing: %f\n", time_spent);
+
+
 	mlx_loop(lmlx->mlx);
 	return (0);
 }

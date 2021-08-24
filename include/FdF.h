@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:46:06 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/24 21:36:36 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/24 22:13:19 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 # define FDF_H
 # include "../libs/_libft/include/libft.h"
 # include "../libs/minilibx-linux/mlx.h"
-
 # include <math.h>
+
+// REMOVE
+# include <time.h>
 # include <stdio.h>
 
 # define RED 0xFF0000
@@ -60,6 +62,7 @@ typedef struct	s_lines
 	char			**splits;
 	size_t			nsplits;
 	size_t			nlines;
+	size_t			number;
 	struct s_lines	*previous;
 	struct s_lines	*next;
 }	t_lines;
@@ -80,6 +83,10 @@ typedef struct s_map
 	int				wx;
 	int				wy;
 }	t_map;
+
+// init
+t_lmlx	*lmlx_init(void);
+
 
 // utils
 size_t  array_length(char **array);
@@ -115,6 +122,7 @@ char	**parse_array(char *src);
 char	 **clearsplits(char **split);
 
 // actions
+void	input_esc(t_lmlx *lmlx);
 void	action_up(t_lmlx *lmlx);
 void	action_down(t_lmlx *lmlx);
 void	action_right(t_lmlx *lmlx);
