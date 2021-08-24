@@ -6,13 +6,13 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 10:12:47 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/24 18:01:27 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/24 19:40:27 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/FdF.h"
 
-void	bresenham_high(int x0, int y0, int x1, int y1, t_lmlx *lmlx)
+void	bresenham_high(t_map *start, t_map *dest, t_lmlx *lmlx)
 {
 	int dx;
 	int dy;
@@ -21,8 +21,8 @@ void	bresenham_high(int x0, int y0, int x1, int y1, t_lmlx *lmlx)
 	int x;
 	int y;
 
-    dx = x1 - x0;
-    dy = y1 - y0;
+    dx = dest->wx - start->wx;
+    dy = dest->wy - start->wy;
     xi = 1;
     if (dx < 0)
 	{
@@ -31,12 +31,12 @@ void	bresenham_high(int x0, int y0, int x1, int y1, t_lmlx *lmlx)
         dx = -dx;
 	}
     D = (2 * dx) - dy;
-    x = x0;
+    x = start->wx;
 
-	y = y0;
-	while (y <= y1)
+	y = start->wy;
+	while (y <= dest->wy)
 	{
-		mlx_pixel_put(lmlx->mlx, lmlx->window, x, y, DEFAULTCOLOR);
+		mlx_pixel_put(lmlx->mlx, lmlx->window, x, y, start->color);
 		if (D > 0)
 		{
 			x += xi;
@@ -48,7 +48,7 @@ void	bresenham_high(int x0, int y0, int x1, int y1, t_lmlx *lmlx)
 	}
 }
 
-void	bresenham_low(int x0, int y0, int x1, int y1, t_lmlx *lmlx)
+void	bresenham_low(t_map *start, t_map *dest, t_lmlx *lmlx)
 {
 	int	dx;
 	int	dy;
@@ -57,8 +57,8 @@ void	bresenham_low(int x0, int y0, int x1, int y1, t_lmlx *lmlx)
 	int	x;
 	int	y;
 
-    dx = x1 - x0;
-    dy = y1 - y0;
+    dx = dest->wx - start->wx;
+    dy = dest->wy - start->wy;
     yi = 1;
     if (dy < 0)
 	{
@@ -66,12 +66,12 @@ void	bresenham_low(int x0, int y0, int x1, int y1, t_lmlx *lmlx)
         dy = -dy;
 	}
     D = (2 * dy) - dx;
-    y = y0;
+    y = start->wy;
 
-	x = x0;
-	while (x <= x1)
+	x = start->wx;
+	while (x <= dest->wx)
 	{
-		mlx_pixel_put(lmlx->mlx, lmlx->window, x, y, DEFAULTCOLOR);
+		mlx_pixel_put(lmlx->mlx, lmlx->window, x, y, start->color);
 		if (D > 0)
 		{
 			y += yi;
@@ -88,15 +88,15 @@ void	bresenham(t_map *start, t_map *dest, t_lmlx *lmlx)
     if (abs(dest->wy - start->wy) < abs(dest->wx - start->wx))
 	{
         if (start->wx > dest->wx)
-            bresenham_low(dest->wx, dest->wy, start->wx, start->wy, lmlx);
+            bresenham_low(dest, start, lmlx);
         else
-            bresenham_low(start->wx, start->wy, dest->wx, dest->wy, lmlx);
+            bresenham_low(start, dest, lmlx);
 	}
     else
 	{
         if (start->wy > dest->wy)
-            bresenham_high(dest->wx, dest->wy, start->wx, start->wy, lmlx);
+            bresenham_high(dest, start, lmlx);
         else
-            bresenham_high(start->wx, start->wy, dest->wx, dest->wy, lmlx);
+            bresenham_high(start, dest, lmlx);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:48:25 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/24 18:15:59 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/24 19:42:41 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ int	main(void)
 	// lmlx->map = parse("./maps/10-2.fdf");
 	// lmlx->map = parse("./maps/10-70.fdf");
 	// lmlx->map = parse("./maps/20-60.fdf");
-	lmlx->map = parse("./maps/42.fdf");
+	// lmlx->map = parse("./maps/42.fdf");
 	// lmlx->map = parse("./maps/50-4.fdf");
 	// lmlx->map = parse("./maps/100-6.fdf");
 	// lmlx->map = parse("./maps/basictest.fdf");
@@ -190,7 +190,7 @@ int	main(void)
 
 	// SLOW
 	// lmlx->map = parse("./maps/elem-fract.fdf");
-	// lmlx->map = parse("./maps/julia.fdf");
+	lmlx->map = parse("./maps/julia.fdf");
 	
 	
 	loop_draw(lmlx->map, lmlx);

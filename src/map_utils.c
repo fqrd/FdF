@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 22:07:27 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/24 00:50:10 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/24 19:35:41 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,8 @@ int	extractColor(t_map **map, char *str)
 	split = ft_split(str, ',');
 	if (!split)
 		return (-1);
-
-		
 	(*map)->z = ft_atoi(split[0]);
-	(*map)->color = (long) split[1];
-
+	(*map)->color = ft_atoi_hex(split[1]);
 	while (split[i])
 	{
 		free(split[i]);
@@ -102,7 +99,6 @@ t_map	*map_init(t_lines *line, t_map *map)
 			}
 			x++;
 		}
-		ft_printf("\n");
 		y++;
 		x = 0;
 		line = line->next;
