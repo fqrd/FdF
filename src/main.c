@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:48:25 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/24 12:20:40 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/24 15:57:00 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,10 +144,9 @@ t_lmlx	*lmlx_init(void)
 			lmlx->baseY = (WINDOW_Y / 2);
 		}
 	}
-	lmlx->elevation = 2;
+	lmlx->elevation = 1;
 	lmlx->distance = 24;
 	lmlx->angle = -0.6;
-	// lmlx->angle = -0.2;
 	lmlx->view = 0;
 	return (lmlx);
 }
@@ -156,18 +155,38 @@ int	main(void)
 {
 	t_lmlx	*lmlx;
 	lmlx = lmlx_init();
+	if (!lmlx)
+		return (0);
 	lmlx->mlx = mlx_init();
 	lmlx->window = mlx_new_window(lmlx->mlx, WINDOW_X, WINDOW_Y, "FdF");
 	mlx_key_hook(lmlx->window, &input_hook, lmlx);
-	// lmlx->map = parse("./maps/42.fdf");
+	// lmlx->map = parse("./maps/10-2.fdf");
 	// lmlx->map = parse("./maps/10-70.fdf");
-	lmlx->map = parse("./maps/test.fdf");
+	// lmlx->map = parse("./maps/20-60.fdf");
+	// lmlx->map = parse("./maps/42.fdf");
+	// lmlx->map = parse("./maps/50-4.fdf");
+	// lmlx->map = parse("./maps/100-6.fdf");
+	// lmlx->map = parse("./maps/basictest.fdf");
 	// lmlx->map = parse("./maps/elem-col.fdf");
+	// lmlx->map = parse("./maps/elem.fdf");
+	// lmlx->map = parse("./maps/elem2.fdf");
 	// lmlx->map = parse("./maps/mars.fdf");
+	// lmlx->map = parse("./maps/pentenegpos.fdf");
+	// lmlx->map = parse("./maps/plat.fdf");
+	// lmlx->map = parse("./maps/pnp_flat.fdf");
+	// lmlx->map = parse("./maps/pylone.fdf");
+	// lmlx->map = parse("./maps/pyra.fdf");
+	// lmlx->map = parse("./maps/pyramide.fdf");
+	// lmlx->map = parse("./maps/square.fdf");
+	// lmlx->map = parse("./maps/t1.fdf");
+	// lmlx->map = parse("./maps/t2.fdf");
+	// lmlx->map = parse("./maps/test.fdf");
 
-	// draw_canvas(lmlx, 0, 0, BORDER);
-	// draw_middleline(lmlx);
-
+	// SLOW
+	lmlx->map = parse("./maps/elem-fract.fdf");
+	// lmlx->map = parse("./maps/julia.fdf");
+	
+	
 	draw(lmlx->map, lmlx);
 	mlx_loop(lmlx->mlx);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 11:25:13 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/24 12:42:03 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/24 14:54:24 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,17 @@ void	draw(t_map *map, t_lmlx *lmlx)
 		}
 		if (map->x != (int) map->max_x)
 			bresenham(current, next, lmlx);
-		bresenham(current, down, lmlx);
+		if (map->y != (int) map->max_y)
+			bresenham(current, down, lmlx);
 		map = map->next;
 	}
+	mlx_pixel_put(lmlx->mlx, lmlx->window, map->x, map->y, GREEN);
 
+
+	free(current);
+	free(next);
+	free(down);
+	current = NULL;
+	next = NULL;
+	down = NULL;
 }
