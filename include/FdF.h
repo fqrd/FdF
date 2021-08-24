@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:46:06 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/24 11:26:35 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/24 18:15:03 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_lmlx
 	int 			view;
 	int				elevation;
 	int				distance;
+	double				height;
 	double 			angle;
 	int				baseX;
 	int				baseY;
@@ -69,31 +70,31 @@ typedef struct s_map
 	int				x;
 	int				y;
 	int				z;
-	long				color;
+	int				color;
 	size_t			max_x;
 	size_t			max_y;
 	struct s_map	*next;
 	struct s_map	*previous;
 	struct s_map	*up;
 	struct s_map	*down;
+	int				wx;
+	int				wy;
 }	t_map;
-
-void	draw_canvas(t_lmlx *lmlx, size_t x, size_t y, size_t bordersize);
-void	draw_middleline(t_lmlx *lmlx);
 
 // utils
 size_t  array_length(char **array);
 size_t  count_list(t_lines  *line);
 
 // draw map
+void	loop_draw(t_map *map, t_lmlx *lmlx);
 void	draw(t_map *map, t_lmlx *lmlx);
-void	bresenham(t_coords *cm1, t_coords *cm2, t_lmlx *lmlx);
+void	bresenham(t_map *start, t_map *dest, t_lmlx *lmlx);
 
 // views
-void	view_from_top(t_map *map, t_coords **coords, t_lmlx *lmlx);
-void	view_from_right(t_map *map, t_coords **coords, t_lmlx *lmlx);
-void	view_from_bottom(t_map *map, t_coords **coords, t_lmlx *lmlx);
-void	view_from_left(t_map *map, t_coords **coords, t_lmlx *lmlx);
+t_map	*view_from_left(t_map *map, t_lmlx *lmlx);
+t_map	*view_from_top(t_map *map, t_lmlx *lmlx);
+t_map	*view_from_bottom(t_map *map, t_lmlx *lmlx);
+t_map	*view_from_right(t_map *map, t_lmlx *lmlx);
 
 // lines
 t_lines	*new_line(t_lines *previous);

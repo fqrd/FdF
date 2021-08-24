@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:48:25 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/24 15:57:00 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/24 18:15:59 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,86 +27,87 @@ int	input_hook(int key, void *params)
 	t_lmlx	*lmlx;
 
 	lmlx = (t_lmlx *)params;
-	ft_printf("key: %d\n", key);
 	// ESC
 	if (key == 65307)
-	{
 		input_esc(lmlx);
-	}
 	// UP
-	if (key == 65362)
+	else if (key == 65362)
 	{
 		lmlx->baseY += 25;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
-		draw(lmlx->map, lmlx);
+		loop_draw(lmlx->map, lmlx);
 	}
 	// DOWN
-	if (key == 65364)
+	else if (key == 65364)
 	{
 		lmlx->baseY -= 25;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
-		draw(lmlx->map, lmlx);
+		loop_draw(lmlx->map, lmlx);
 	}
 	// RIGHT
-	if (key == 65363)
+	else if (key == 65363)
 	{
 		lmlx->baseX -= 25;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
-		draw(lmlx->map, lmlx);
+		loop_draw(lmlx->map, lmlx);
 	}
 	// LEFT
-	if (key == 65361)
+	else if (key == 65361)
 	{
 		lmlx->baseX += 25;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
-		draw(lmlx->map, lmlx);
+		loop_draw(lmlx->map, lmlx);
 	}
 	// +
-	if (key == 41)
+	else if (key == 41)
 	{
 		lmlx->elevation+=1;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
-		draw(lmlx->map, lmlx);
+		loop_draw(lmlx->map, lmlx);
 	}
 	// -
-	if (key == 61)
+	else if (key == 61)
 	{
 		lmlx->elevation-=1;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
-		draw(lmlx->map, lmlx);
+		loop_draw(lmlx->map, lmlx);
 	}
 	// +
-	if (key == 65451)
+	else if (key == 65451)
 	{
 		lmlx->distance+=1;
+		lmlx->height = atan(lmlx->angle) * lmlx->distance;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
-		draw(lmlx->map, lmlx);
+		loop_draw(lmlx->map, lmlx);
 	}
 	// -
-	if (key == 65453)
+	else if (key == 65453)
 	{
 		lmlx->distance-=1;
+		lmlx->height = atan(lmlx->angle) * lmlx->distance;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
-		draw(lmlx->map, lmlx);
+		loop_draw(lmlx->map, lmlx);
 	}
 	// Turn q
-	if (key == 113)
+	else if (key == 113)
 	{
 		lmlx->angle+=0.02;
+		lmlx->height = atan(lmlx->angle) * lmlx->distance;
 		printf("angle: %f\n", lmlx->angle);
 		mlx_clear_window(lmlx->mlx, lmlx->window);
-		draw(lmlx->map, lmlx);
+		loop_draw(lmlx->map, lmlx);
 	}
 	// TURN d
-	if (key == 100)
+	else if (key == 100)
 	{
 		lmlx->angle-=0.02;
+		lmlx->height = atan(lmlx->angle) * lmlx->distance;
 		printf("angle: %f\n", lmlx->angle);
 		mlx_clear_window(lmlx->mlx, lmlx->window);
-		draw(lmlx->map, lmlx);
+		loop_draw(lmlx->map, lmlx);
 	}
 	// TAB Rotation
-	if (key == 65289)
+	else if (key == 65289)
 	{
 		if (lmlx->view == 3)
 			lmlx->view = 0;
@@ -114,7 +115,11 @@ int	input_hook(int key, void *params)
 			lmlx->view++;
 		printf("view: %d\n", lmlx->view);
 		mlx_clear_window(lmlx->mlx, lmlx->window);
-		draw(lmlx->map, lmlx);
+		loop_draw(lmlx->map, lmlx);
+	}
+	else
+	{
+		ft_printf("key: %d\n", key);
 	}
 	return (0);
 }
@@ -147,6 +152,7 @@ t_lmlx	*lmlx_init(void)
 	lmlx->elevation = 1;
 	lmlx->distance = 24;
 	lmlx->angle = -0.6;
+	lmlx->height = atan(lmlx->angle) * lmlx->distance;
 	lmlx->view = 0;
 	return (lmlx);
 }
@@ -163,7 +169,7 @@ int	main(void)
 	// lmlx->map = parse("./maps/10-2.fdf");
 	// lmlx->map = parse("./maps/10-70.fdf");
 	// lmlx->map = parse("./maps/20-60.fdf");
-	// lmlx->map = parse("./maps/42.fdf");
+	lmlx->map = parse("./maps/42.fdf");
 	// lmlx->map = parse("./maps/50-4.fdf");
 	// lmlx->map = parse("./maps/100-6.fdf");
 	// lmlx->map = parse("./maps/basictest.fdf");
@@ -183,11 +189,11 @@ int	main(void)
 	// lmlx->map = parse("./maps/test.fdf");
 
 	// SLOW
-	lmlx->map = parse("./maps/elem-fract.fdf");
+	// lmlx->map = parse("./maps/elem-fract.fdf");
 	// lmlx->map = parse("./maps/julia.fdf");
 	
 	
-	draw(lmlx->map, lmlx);
+	loop_draw(lmlx->map, lmlx);
 	mlx_loop(lmlx->mlx);
 	return (0);
 }

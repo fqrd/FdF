@@ -6,79 +6,34 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 11:25:13 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/24 14:54:24 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/24 18:01:51 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/FdF.h"
 
-t_coords	*coords_init(t_lmlx *lmlx)
-{
-	t_coords *coords;
-	
-	coords = malloc (sizeof(t_coords) * 1);
-	if (!coords)
-		return (NULL);
-
-	coords->height = atan(lmlx->angle) * lmlx->distance;
-
-	return (coords);
-}
-
 void	draw(t_map *map, t_lmlx *lmlx)
 {
-	t_coords *current;
-	t_coords *next;
-	t_coords *down;
+	if (lmlx->view == 0)
+		map = view_from_top(map, lmlx);
+	else if (lmlx->view == 1)
+		map = view_from_right(map, lmlx);
+	else if (lmlx->view == 2)
+		map = view_from_bottom(map, lmlx);
+	else
+		map = view_from_left(map, lmlx);
+	if (map->previous && (map->y == map->previous->y))
+		bresenham(map, map->previous, lmlx);
+	if (map->up)
+		bresenham(map, map->up, lmlx);
+}
 
-	current = coords_init(lmlx);
-	next = coords_init(lmlx);
-	down = coords_init(lmlx);
-
+void	loop_draw(t_map *map, t_lmlx *lmlx)
+{
 	while (map->next)
 	{
-		if (lmlx->view == 0)
-		{
-			view_from_top(map, &current, lmlx);
-			view_from_top(map->next, &next, lmlx);
-			if (map->down)
-				view_from_top(map->down, &down, lmlx);
-		}
-		else if (lmlx->view == 1)
-		{
-			view_from_right(map, &current, lmlx);
-			view_from_right(map->next, &next, lmlx);
-			if (map->down)
-				view_from_right(map->down, &down, lmlx);
-
-		}
-		else if (lmlx->view == 2)
-		{
-			view_from_bottom(map, &current, lmlx);
-			view_from_bottom(map->next, &next, lmlx);
-			if (map->down)
-				view_from_bottom(map->down, &down, lmlx);
-		}
-		else
-		{
-			view_from_left(map, &current, lmlx);
-			view_from_left(map->next, &next, lmlx);
-			if (map->down)
-				view_from_left(map->down, &down, lmlx);
-		}
-		if (map->x != (int) map->max_x)
-			bresenham(current, next, lmlx);
-		if (map->y != (int) map->max_y)
-			bresenham(current, down, lmlx);
+		draw(map, lmlx);
 		map = map->next;
 	}
-	mlx_pixel_put(lmlx->mlx, lmlx->window, map->x, map->y, GREEN);
-
-
-	free(current);
-	free(next);
-	free(down);
-	current = NULL;
-	next = NULL;
-	down = NULL;
+	draw(map, lmlx);
 }

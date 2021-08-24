@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 10:12:47 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/24 11:14:18 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/24 18:01:27 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,20 +83,20 @@ void	bresenham_low(int x0, int y0, int x1, int y1, t_lmlx *lmlx)
 	}
 }
 
-void	bresenham(t_coords *cm1, t_coords *cm2, t_lmlx *lmlx)
+void	bresenham(t_map *start, t_map *dest, t_lmlx *lmlx)
 {
-    if (abs(cm2->y - cm1->y) < abs(cm2->x - cm1->x))
+    if (abs(dest->wy - start->wy) < abs(dest->wx - start->wx))
 	{
-        if (cm1->x > cm2->x)
-            bresenham_low(cm2->x, cm2->y, cm1->x, cm1->y, lmlx);
+        if (start->wx > dest->wx)
+            bresenham_low(dest->wx, dest->wy, start->wx, start->wy, lmlx);
         else
-            bresenham_low(cm1->x, cm1->y, cm2->x, cm2->y, lmlx);
+            bresenham_low(start->wx, start->wy, dest->wx, dest->wy, lmlx);
 	}
     else
 	{
-        if (cm1->y > cm2->y)
-            bresenham_high(cm2->x, cm2->y, cm1->x, cm1->y, lmlx);
+        if (start->wy > dest->wy)
+            bresenham_high(dest->wx, dest->wy, start->wx, start->wy, lmlx);
         else
-            bresenham_high(cm1->x, cm1->y, cm2->x, cm2->y, lmlx);
+            bresenham_high(start->wx, start->wy, dest->wx, dest->wy, lmlx);
 	}
 }
