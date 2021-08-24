@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:46:06 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/24 18:15:03 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/24 21:36:36 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,5 +113,15 @@ t_map	*link_ridges(t_map *map);
 // array_test
 char	**parse_array(char *src);
 char	 **clearsplits(char **split);
+
+// actions
+void	action_up(t_lmlx *lmlx);
+void	action_down(t_lmlx *lmlx);
+void	action_right(t_lmlx *lmlx);
+void	action_left(t_lmlx *lmlx);
+void	action_elevation(t_lmlx *lmlx, int key);
+void	action_zoom(t_lmlx *lmlx, int key);
+void	action_angle(t_lmlx *lmlx, int key);
+void	action_rotation(t_lmlx *lmlx);
 
 #endif
