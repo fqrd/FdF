@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:46:06 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/24 00:49:12 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/24 11:26:35 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,27 @@
 
 typedef struct s_lmlx
 {
-	void *mlx;
-	void *window;
-	struct s_map *map;
-	int	elevation;
-	int	distance;
-	double angle;
-	int	base;
-	int top;
-	int left;
+	void			*mlx;
+	void			*window;
+	struct s_map	*map;
+	int 			view;
+	int				elevation;
+	int				distance;
+	double 			angle;
+	int				baseX;
+	int				baseY;
+	int 			top;
+	int 			left;
 }	t_lmlx;
 
 typedef struct s_coords
 {
-	int x;
-	int y;
-	int x1;
-	int y1;
-	int distance;
-	double height;
-	int elevation;
-	int base;
+	int 	x;
+	int 	y;
+	int 	distance;
+	double 	height;
+	int 	elevation;
+	int 	base;
 }	t_coords;
 
 typedef struct	s_lines
@@ -87,7 +87,13 @@ size_t  count_list(t_lines  *line);
 
 // draw map
 void	draw(t_map *map, t_lmlx *lmlx);
-void	bresenham(int x0, int y0, int x1, int y1, t_lmlx *lmlx);
+void	bresenham(t_coords *cm1, t_coords *cm2, t_lmlx *lmlx);
+
+// views
+void	view_from_top(t_map *map, t_coords **coords, t_lmlx *lmlx);
+void	view_from_right(t_map *map, t_coords **coords, t_lmlx *lmlx);
+void	view_from_bottom(t_map *map, t_coords **coords, t_lmlx *lmlx);
+void	view_from_left(t_map *map, t_coords **coords, t_lmlx *lmlx);
 
 // lines
 t_lines	*new_line(t_lines *previous);

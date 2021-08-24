@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:48:25 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/24 00:39:49 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/24 12:20:40 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,28 +36,28 @@ int	input_hook(int key, void *params)
 	// UP
 	if (key == 65362)
 	{
-		lmlx->top+=25;
+		lmlx->baseY += 25;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
 		draw(lmlx->map, lmlx);
 	}
 	// DOWN
 	if (key == 65364)
 	{
-		lmlx->top-=25;
+		lmlx->baseY -= 25;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
 		draw(lmlx->map, lmlx);
 	}
 	// RIGHT
 	if (key == 65363)
 	{
-		lmlx->left-=25;
+		lmlx->baseX -= 25;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
 		draw(lmlx->map, lmlx);
 	}
 	// LEFT
 	if (key == 65361)
 	{
-		lmlx->left+=25;
+		lmlx->baseX += 25;
 		mlx_clear_window(lmlx->mlx, lmlx->window);
 		draw(lmlx->map, lmlx);
 	}
@@ -105,6 +105,17 @@ int	input_hook(int key, void *params)
 		mlx_clear_window(lmlx->mlx, lmlx->window);
 		draw(lmlx->map, lmlx);
 	}
+	// TAB Rotation
+	if (key == 65289)
+	{
+		if (lmlx->view == 3)
+			lmlx->view = 0;
+		else
+			lmlx->view++;
+		printf("view: %d\n", lmlx->view);
+		mlx_clear_window(lmlx->mlx, lmlx->window);
+		draw(lmlx->map, lmlx);
+	}
 	return (0);
 }
 
@@ -116,19 +127,28 @@ t_lmlx	*lmlx_init(void)
 	if (!lmlx)
 		return (NULL);
 	if (WINDOW_Y == WINDOW_X)
-		lmlx->base = WINDOW_Y / 2;
+	{
+		lmlx->baseX = (WINDOW_Y / 2);
+		lmlx->baseY = (WINDOW_Y / 2);
+	}
 	else
 	{
 		if (WINDOW_Y > WINDOW_X)
-			lmlx->base = WINDOW_X / 2;
+		{
+			lmlx->baseX = (WINDOW_X / 2);
+			lmlx->baseY = (WINDOW_X / 2);
+		}
 		else
-			lmlx->base = WINDOW_Y / 2;
+		{
+			lmlx->baseX = (WINDOW_Y / 2);
+			lmlx->baseY = (WINDOW_Y / 2);
+		}
 	}
-	lmlx->elevation = 1;
-	lmlx->distance = 12;
-	lmlx->angle = -0.2;
-	lmlx->top = 0;
-	lmlx->left = 0;
+	lmlx->elevation = 2;
+	lmlx->distance = 24;
+	lmlx->angle = -0.6;
+	// lmlx->angle = -0.2;
+	lmlx->view = 0;
 	return (lmlx);
 }
 
@@ -141,8 +161,8 @@ int	main(void)
 	mlx_key_hook(lmlx->window, &input_hook, lmlx);
 	// lmlx->map = parse("./maps/42.fdf");
 	// lmlx->map = parse("./maps/10-70.fdf");
-	// lmlx->map = parse("./maps/julia.fdf");
-	lmlx->map = parse("./maps/elem-col.fdf");
+	lmlx->map = parse("./maps/test.fdf");
+	// lmlx->map = parse("./maps/elem-col.fdf");
 	// lmlx->map = parse("./maps/mars.fdf");
 
 	// draw_canvas(lmlx, 0, 0, BORDER);
