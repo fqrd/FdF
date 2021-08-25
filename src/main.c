@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:48:25 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/25 17:27:01 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/25 23:04:02 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ int	input_hook(int key, void *params)
 	else if (key == 65361)
 		action_left(lmlx);
 	else if (key == 41 || key == 61)
-		action_elevation(lmlx, key);
+		action_elevation(lmlx, key == 41);
 	else if (key == 65451 || key == 65453)
-		action_zoom(lmlx, key);
+		action_zoom(lmlx, key == 65451);
 	else if (key == 113 || key == 100)
-		action_angle(lmlx, key);
+		action_angle(lmlx, key == 113);
 	else if (key == 65289)
 		action_rotation(lmlx);
 	return (0);
@@ -46,13 +46,14 @@ t_lmlx	*lmlx_init(void)
 	lmlx = malloc(sizeof(t_lmlx) * 1);
 	if (!lmlx)
 		return (NULL);
-	lmlx->view = 0;
+	lmlx->view = 2;
 	lmlx->elevation = 1;
 	lmlx->distance = 5;
-	lmlx->angle = 0.52;
+	lmlx->angle = 0.56;
 	lmlx->height = atan(lmlx->angle) * lmlx->distance;
 	lmlx->baseX = (WINDOW_X / 2);
 	lmlx->baseY = (WINDOW_Y / 2);
+	lmlx->flag_rotation = 1;
 	return (lmlx);
 }
 

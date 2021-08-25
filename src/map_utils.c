@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 22:07:27 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/24 21:41:46 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/25 23:17:18 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_map	*new_map(t_map *previous, size_t max_y, size_t max_x)
 	map->y = 0;
 	map->z = 0;
 	map->color = DEFAULTCOLOR;
-	map->line = NULL;
 	map->next = NULL;
 	map->previous = previous;
 	map->up = NULL;
@@ -46,8 +45,8 @@ t_map	*rewind_map(t_map *map)
 
 int	extractColor(t_map **map, char *str)
 {
-	char **split;
-	int i;
+	char	**split;
+	int		i;
 
 	i = 0;
 	split = ft_split(str, ',');
@@ -63,6 +62,25 @@ int	extractColor(t_map **map, char *str)
 	}
 	free(split);
 	split = NULL;
+	return (1);
+}
+
+static int	populate_map(t_map **map, t_lines **line, t_map **link, size_t x)
+{
+	if (ft_charpos((*line)->splits[x], ',') > 0)
+	{
+		if (extractColor(map, (*line)->splits[x]) == -1)
+			return (0);
+	}
+	else
+		(*map)->z = ft_atoi((*line)->splits[x]);
+	if (x == 0)
+	{
+		(*map)->up = *link;
+		if ((*map)->up)
+			(*map)->up->down = *map;
+		*link = *map;
+	}
 	return (1);
 }
 
@@ -82,20 +100,8 @@ t_map	*map_init(t_lines *line, t_map *map)
 			map = new_map(map, line->nlines, line->nsplits);
 			map->x = x;
 			map->y = y;
-			if (ft_charpos(line->splits[x], ',') > 0)
-			{
-				if (extractColor(&map, line->splits[x]) == -1)
-					return (NULL);
-			}
-			else
-				map->z = ft_atoi(line->splits[x]);
-			if (x == 0)
-			{
-				map->up = link;
-				if (map->up)
-					map->up->down = map;
-				link = map;
-			}
+			if (!populate_map(&map, &line, &link, x))
+				return (NULL);
 			x++;
 		}
 		y++;

@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:46:06 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/25 16:19:39 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/25 22:27:43 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,14 @@ typedef struct s_lmlx
 	void			*window;
 	struct s_map	*map;
 	int 			view;
-	int				elevation;
+	double			elevation;
 	int				distance;
 	double			height;
 	double 			angle;
 	int				baseX;
 	int				baseY;
-	int 			top;
-	int 			left;
+	int				flag_rotation;
 }	t_lmlx;
-
-typedef struct s_coords
-{
-	int 	x;
-	int 	y;
-	int 	distance;
-	double 	height;
-	int 	elevation;
-	int 	base;
-}	t_coords;
 
 typedef struct	s_lines
 {
@@ -64,7 +53,6 @@ typedef struct	s_lines
 
 typedef struct s_map
 {
-	char 			*line;
 	int				x;
 	int				y;
 	int				z;
@@ -127,4 +115,8 @@ void	action_zoom(t_lmlx *lmlx, int key);
 void	action_angle(t_lmlx *lmlx, int key);
 void	action_rotation(t_lmlx *lmlx);
 
+// center
+void	centerXY(t_map *map, t_lmlx *lmlx);
+void	centerYX(t_map *map, t_lmlx *lmlx);
+void	centerXX(t_map *map, t_lmlx *lmlx);
 #endif

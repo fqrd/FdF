@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 22:05:22 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/24 22:27:32 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/25 23:04:16 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_lines	*get_lines(char *map, t_lines *line)
 {
 	int		o;
 	char	*str;
-	int i;
+	int		i;
 
 	i = 0;
 	str = NULL;
@@ -53,7 +53,7 @@ t_lines	*get_lines(char *map, t_lines *line)
 			i++;
 			line->line = str;
 			line = new_line(line);
-			line->number = i;
+			line->nlines = i;
 			str = get_next_line(o);
 		}
 	}

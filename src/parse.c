@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:48:03 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/25 13:56:49 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/25 23:03:11 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_map	*link_ridges(t_map *map)
 		}
 		map = map->next;
 	}
-
 	return (rewind_map(map));
 }
 
@@ -37,7 +36,7 @@ t_map	*parse(char *src)
 	map = NULL;
 	line = new_line(NULL);
 	line = get_lines(src, line);
-	line = split_lines(first_line(line), line->number);
+	line = split_lines(first_line(line), line->nlines);
 	map = map_init(line, map);
 	line_clear(&line);
 	free(line);
