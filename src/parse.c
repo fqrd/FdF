@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:48:03 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/24 22:31:33 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/25 13:56:49 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,28 +37,8 @@ t_map	*parse(char *src)
 	map = NULL;
 	line = new_line(NULL);
 	line = get_lines(src, line);
-
-	//debug -----------
-	clock_t begin = clock();
-	// --------------
-
 	line = split_lines(first_line(line), line->number);
-
-	//debug -----------
-	clock_t end = clock();
-	double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-	printf("time spent split_lines: %f\n", time_spent);
-	begin = clock();
-	// ---------------
-
 	map = map_init(line, map);
-
-	//debug -----------
-	end = clock();
-	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-	printf("time spent map_init: %f\n", time_spent);
-	// -----------
-
 	line_clear(&line);
 	free(line);
 	line = NULL;

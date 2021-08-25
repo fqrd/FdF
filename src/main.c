@@ -6,11 +6,12 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:48:25 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/24 21:57:58 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/25 16:20:33 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/FdF.h"
+#include <stdio.h>
 
 int	input_hook(int key, void *params)
 {
@@ -38,28 +39,6 @@ int	input_hook(int key, void *params)
 	return (0);
 }
 
-static void	getWindowCenter(t_lmlx **lmlx)
-{
-	if (WINDOW_Y == WINDOW_X)
-	{
-		(*lmlx)->baseX = (WINDOW_Y / 2);
-		(*lmlx)->baseY = (WINDOW_Y / 2);
-	}
-	else
-	{
-		if (WINDOW_Y > WINDOW_X)
-		{
-			(*lmlx)->baseX = (WINDOW_X / 2);
-			(*lmlx)->baseY = (WINDOW_X / 2);
-		}
-		else
-		{
-			(*lmlx)->baseX = (WINDOW_Y / 2);
-			(*lmlx)->baseY = (WINDOW_Y / 2);
-		}
-	}
-}
-
 t_lmlx	*lmlx_init(void)
 {
 	t_lmlx	*lmlx;
@@ -67,21 +46,19 @@ t_lmlx	*lmlx_init(void)
 	lmlx = malloc(sizeof(t_lmlx) * 1);
 	if (!lmlx)
 		return (NULL);
-	getWindowCenter(&lmlx);
-	lmlx->view = 0;
+	lmlx->view = 2;
 	lmlx->elevation = 1;
 	lmlx->distance = 5;
-	lmlx->angle = -0.6;
+	lmlx->angle = -0.52;
 	lmlx->height = atan(lmlx->angle) * lmlx->distance;
+	lmlx->baseX = (WINDOW_X / 2);
+	lmlx->baseY = (WINDOW_Y / 2);
 	return (lmlx);
 }
 
 int	main(int argc, char **argv)
 {
 	t_lmlx	*lmlx;
-
-	// debug
-	clock_t begin = clock();
 
 	if (argc != 2)
 		return (0);
@@ -91,29 +68,8 @@ int	main(int argc, char **argv)
 	lmlx->mlx = mlx_init();
 	lmlx->window = mlx_new_window(lmlx->mlx, WINDOW_X, WINDOW_Y, "FdF");
 	mlx_key_hook(lmlx->window, &input_hook, lmlx);
-	
-	// debug
-	clock_t end = clock();
-	double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-	printf("time spent prior parsing: %f\n", time_spent);
-	begin = clock();
-	
 	lmlx->map = parse(argv[1]);
-
-	// debug
-	end = clock();
-	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-	printf("time spent parsing: %f\n", time_spent);
-	begin = clock();
-
 	loop_draw(lmlx->map, lmlx);
-
-	//debug
-	end = clock();
-	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-	printf("time spent drawing: %f\n", time_spent);
-
-
 	mlx_loop(lmlx->mlx);
 	return (0);
 }

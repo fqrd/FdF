@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:46:06 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/24 22:13:19 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/25 16:19:39 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,6 @@
 # include "../libs/_libft/include/libft.h"
 # include "../libs/minilibx-linux/mlx.h"
 # include <math.h>
-
-// REMOVE
-# include <time.h>
-# include <stdio.h>
-
 # define RED 0xFF0000
 # define GREEN 0x00FF00
 # define BLUE 0X0000FF
@@ -38,7 +33,7 @@ typedef struct s_lmlx
 	int 			view;
 	int				elevation;
 	int				distance;
-	double				height;
+	double			height;
 	double 			angle;
 	int				baseX;
 	int				baseY;
