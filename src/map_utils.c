@@ -6,13 +6,13 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 22:07:27 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/25 23:17:18 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/26 14:14:15 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/FdF.h"
 
-t_map	*new_map(t_map *previous, size_t max_y, size_t max_x)
+static t_map	*new_map(t_map *previous, size_t max_y, size_t max_x)
 {
 	t_map	*map;
 
@@ -43,7 +43,7 @@ t_map	*rewind_map(t_map *map)
 	return (map);
 }
 
-int	extractColor(t_map **map, char *str)
+static int	extractColor(t_map **map, char *str)
 {
 	char	**split;
 	int		i;

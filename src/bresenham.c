@@ -6,13 +6,13 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 10:12:47 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/26 14:01:33 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/26 14:32:03 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/FdF.h"
 
-t_brshm	*bresenham_init(void)
+static t_brshm	*bhm_init(void)
 {
 	t_brshm	*bhm;
 
@@ -29,7 +29,7 @@ t_brshm	*bresenham_init(void)
 	return (bhm);
 }
 
-void	bresenham_high(t_map *start, t_map *dest, t_lmlx *lmlx, t_brshm *bhm)
+static void	bhm_high(t_map *start, t_map *dest, t_lmlx *lmlx, t_brshm *bhm)
 {
 	bhm->dx = dest->wx - start->wx;
 	bhm->dy = dest->wy - start->wy;
@@ -56,7 +56,7 @@ void	bresenham_high(t_map *start, t_map *dest, t_lmlx *lmlx, t_brshm *bhm)
 	}
 }
 
-void	bresenham_low(t_map *start, t_map *dest, t_lmlx *lmlx, t_brshm *bhm)
+static void	bhm_low(t_map *start, t_map *dest, t_lmlx *lmlx, t_brshm *bhm)
 {
 	bhm->dx = dest->wx - start->wx;
 	bhm->dy = dest->wy - start->wy;
@@ -87,22 +87,22 @@ int	bresenham(t_map *start, t_map *dest, t_lmlx *lmlx)
 {
 	t_brshm	*bhm;
 
-	bhm = bresenham_init();
+	bhm = bhm_init();
 	if (!bhm)
 		return (0);
 	if (abs(dest->wy - start->wy) < abs(dest->wx - start->wx))
 	{
 		if (start->wx > dest->wx)
-			bresenham_low(dest, start, lmlx, bhm);
+			bhm_low(dest, start, lmlx, bhm);
 		else
-			bresenham_low(start, dest, lmlx, bhm);
+			bhm_low(start, dest, lmlx, bhm);
 	}
 	else
 	{
 		if (start->wy > dest->wy)
-			bresenham_high(dest, start, lmlx, bhm);
+			bhm_high(dest, start, lmlx, bhm);
 		else
-			bresenham_high(start, dest, lmlx, bhm);
+			bhm_high(start, dest, lmlx, bhm);
 	}
 	free(bhm);
 	return (1);

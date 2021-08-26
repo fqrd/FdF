@@ -6,13 +6,13 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:48:03 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/25 23:03:11 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/26 14:20:30 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/FdF.h"
 
-t_map	*link_ridges(t_map *map)
+static t_map	*link_ridges(t_map *map)
 {
 	while (map->next)
 	{

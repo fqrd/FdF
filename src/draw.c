@@ -6,13 +6,13 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 11:25:13 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/25 22:59:41 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/26 14:16:25 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/FdF.h"
 
-void	draw(t_map *map, t_lmlx *lmlx)
+static void	draw(t_map *map, t_lmlx *lmlx)
 {
 	if (lmlx->view == 0)
 		map = view_from_top(map, lmlx);

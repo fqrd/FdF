@@ -6,14 +6,13 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:48:25 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/25 23:04:02 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/26 14:19:58 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/FdF.h"
-#include <stdio.h>
 
-int	input_hook(int key, void *params)
+static int	input_hook(int key, void *params)
 {
 	t_lmlx	*lmlx;
 
@@ -39,7 +38,7 @@ int	input_hook(int key, void *params)
 	return (0);
 }
 
-t_lmlx	*lmlx_init(void)
+static t_lmlx	*lmlx_init(void)
 {
 	t_lmlx	*lmlx;
 
