@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:48:25 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/26 15:30:43 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/26 17:55:53 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,17 @@ int	main(int argc, char **argv)
 	if (!lmlx)
 		return (0);
 	lmlx->mlx = mlx_init();
+	if (!lmlx->mlx)
+		return (0);
 	lmlx->window = mlx_new_window(lmlx->mlx, WINDOW_X, WINDOW_Y, "FdF");
+	if (!lmlx->window)
+		return (0);
 	mlx_key_hook(lmlx->window, &input_hook, lmlx);
 	lmlx->map = parse(argv[1]);
-	loop_draw(lmlx->map, lmlx);
+	if (!lmlx->map)
+		return (0);
+	if (!loop_draw(lmlx->map, lmlx))
+		return (0);
 	mlx_loop(lmlx->mlx);
-	return (0);
+	return (1);
 }

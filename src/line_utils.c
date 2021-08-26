@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 22:05:22 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/26 14:30:15 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/26 17:44:23 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_lines	*new_line(t_lines *previous)
 		return (NULL);
 	line->line = NULL;
 	line->next = NULL;
+	line->splits = NULL;
 	line->previous = previous;
 	if (previous)
 		previous->next = line;
@@ -69,7 +70,10 @@ t_lines	*split_lines(t_lines *line, size_t nlines)
 	{
 		line->splits = ft_split(line->line, ' ');
 		if (!line->splits)
-			return (NULL);
+		{
+			line = first_line(line);
+			return (clear_line_main(&line));
+		}
 		line->nlines = nlines;
 		if (nsplits == 0)
 			nsplits = ft_arrlen(line->splits);
@@ -77,29 +81,4 @@ t_lines	*split_lines(t_lines *line, size_t nlines)
 		line = line->next;
 	}
 	return (first_line(line));
-}
-
-void	line_clear(t_lines **line)
-{
-	size_t	i;
-	t_lines	*tmp;
-
-	i = 0;
-	while ((*line)->next)
-	{
-		while ((*line)->splits[i])
-		{
-			free((*line)->splits[i]);
-			(*line)->splits[i] = NULL;
-			i++;
-		}
-		free((*line)->splits);
-		(*line)->splits = NULL;
-		free((*line)->line);
-		(*line)->line = NULL;
-		tmp = (*line)->next;
-		free (*line);
-		*line = tmp;
-		i = 0;
-	}
 }

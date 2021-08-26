@@ -6,7 +6,7 @@
 #    By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/01 14:30:44 by fcaquard          #+#    #+#              #
-#    Updated: 2021/08/26 15:17:51 by fcaquard         ###   ########.fr        #
+#    Updated: 2021/08/26 16:49:51 by fcaquard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCS = \
 	$(SRC_FOLDER)navigation.c	\
 	$(SRC_FOLDER)parse.c		\
 	$(SRC_FOLDER)views.c		\
+	$(SRC_FOLDER)clear.c		\
 
 OBJS = $(SRCS:.c=.o)
 

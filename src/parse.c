@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:48:03 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/26 14:20:30 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/26 17:51:08 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,16 @@ t_map	*parse(char *src)
 
 	map = NULL;
 	line = new_line(NULL);
+	if (!line)
+		return (NULL);
 	line = get_lines(src, line);
 	line = split_lines(first_line(line), line->nlines);
+	if (!line)
+		return (NULL);
 	map = map_init(line, map);
-	line_clear(&line);
+	if (!map)
+		return (NULL);
+	clear_line_main(&line);
 	free(line);
 	line = NULL;
 	map = link_ridges(map);
