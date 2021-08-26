@@ -6,14 +6,14 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:46:06 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/26 14:32:35 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/26 15:16:06 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
-# include "../libs/_libft/include/libft.h"
-# include "../libs/minilibx-linux/mlx.h"
+# include "../lib/libft/include/libft.h"
+# include "../lib/minilibx-linux/mlx.h"
 # include <math.h>
 # define RED 0xFF0000
 # define GREEN 0x00FF00

@@ -6,7 +6,7 @@
 #    By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/01 14:30:44 by fcaquard          #+#    #+#              #
-#    Updated: 2021/08/26 15:06:43 by fcaquard         ###   ########.fr        #
+#    Updated: 2021/08/26 15:17:51 by fcaquard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,9 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 SRC_FOLDER = ./src/
 
-PATH_LIBS = ./libs/
+PATH_LIBS = ./lib/
 LMLX = $(PATH_LIBS)minilibx-linux
-LFT = $(PATH_LIBS)_libft
+LFT = $(PATH_LIBS)libft
 NAME = fdf
 
 SRCS = \
