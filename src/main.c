@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:48:25 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/26 17:55:53 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/26 20:51:41 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ static int	input_hook(int key, void *params)
 		action_right(lmlx);
 	else if (key == 65361)
 		action_left(lmlx);
-	else if (key == 41 || key == 61)
-		action_elevation(lmlx, key == 41);
-	else if (key == 65451 || key == 65453)
-		action_zoom(lmlx, key == 65451);
-	else if (key == 113 || key == 100)
-		action_angle(lmlx, key == 113);
+	else if (key == 108 || key == 107)
+		action_elevation(lmlx, key == 108);
+	else if (key == 112 || key == 111)
+		action_zoom(lmlx, key == 112);
+	else if (key == 104 || key == 106)
+		action_angle(lmlx, key == 104);
 	else if (key == 65289)
 		action_rotation(lmlx);
 	return (0);
@@ -65,18 +65,18 @@ int	main(int argc, char **argv)
 	lmlx = lmlx_init();
 	if (!lmlx)
 		return (0);
-	lmlx->mlx = mlx_init();
-	if (!lmlx->mlx)
-		return (0);
-	lmlx->window = mlx_new_window(lmlx->mlx, WINDOW_X, WINDOW_Y, "FdF");
-	if (!lmlx->window)
-		return (0);
-	mlx_key_hook(lmlx->window, &input_hook, lmlx);
 	lmlx->map = parse(argv[1]);
 	if (!lmlx->map)
-		return (0);
+		return (clear_lmlx(&lmlx));
+	lmlx->mlx = mlx_init();
+	if (!lmlx->mlx)
+		return (clear_lmlx(&lmlx));
+	lmlx->window = mlx_new_window(lmlx->mlx, WINDOW_X, WINDOW_Y, "FdF");
+	if (!lmlx->window)
+		return (clear_lmlx(&lmlx));
+	mlx_key_hook(lmlx->window, &input_hook, lmlx);
 	if (!loop_draw(lmlx->map, lmlx))
-		return (0);
+		return (clear_lmlx(&lmlx));
 	mlx_loop(lmlx->mlx);
 	return (1);
 }

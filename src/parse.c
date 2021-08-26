@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:48:03 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/26 17:51:08 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/26 20:38:44 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ t_map	*parse(char *src)
 	if (!line)
 		return (NULL);
 	line = get_lines(src, line);
+	if (!line)
+		return (NULL);
 	line = split_lines(first_line(line), line->nlines);
 	if (!line)
 		return (NULL);

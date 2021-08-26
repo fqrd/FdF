@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 22:05:22 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/26 17:44:23 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/26 19:49:03 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,8 @@ t_lines	*get_lines(char *map, t_lines *line)
 	int		i;
 
 	i = 0;
-	str = NULL;
 	o = open(map, O_RDONLY);
-	if (o != -1)
+	if (o >= 0)
 	{
 		str = get_next_line(o);
 		while (str)
@@ -57,6 +56,11 @@ t_lines	*get_lines(char *map, t_lines *line)
 			line->nlines = i;
 			str = get_next_line(o);
 		}
+	}
+	else
+	{
+		perror("Error");
+		return (clear_line_main(&line));
 	}
 	return (line);
 }
@@ -70,10 +74,7 @@ t_lines	*split_lines(t_lines *line, size_t nlines)
 	{
 		line->splits = ft_split(line->line, ' ');
 		if (!line->splits)
-		{
-			line = first_line(line);
 			return (clear_line_main(&line));
-		}
 		line->nlines = nlines;
 		if (nsplits == 0)
 			nsplits = ft_arrlen(line->splits);

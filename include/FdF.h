@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:46:06 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/26 16:48:07 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/26 20:42:00 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,11 @@ void	action_rotation(t_lmlx *lmlx);
 // bresenham
 int		bresenham(t_map *start, t_map *dest, t_lmlx *lmlx);
 
+// clear
+void	*clear_line_main(t_lines **line);
+int		clear_lmlx(t_lmlx **lmlx);
+void	*clear_map(t_map **map);
+
 // draw
 int		loop_draw(t_map *map, t_lmlx *lmlx);
 
@@ -95,9 +100,6 @@ t_lines	*new_line(t_lines *previous);
 t_lines	*first_line(t_lines *line);
 t_lines	*get_lines(char *map, t_lines *line);
 t_lines	*split_lines(t_lines *line, size_t nlines);
-
-// clear
-void	*clear_line_main(t_lines **line);
 
 // map_utils
 t_map	*rewind_map(t_map *map);

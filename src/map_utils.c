@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 22:07:27 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/26 17:50:32 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/26 20:38:06 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static t_map	*new_map(t_map *previous, size_t max_y, size_t max_x)
 
 	map = malloc(sizeof(t_map) * 1);
 	if (!map)
-		return (NULL);
+		return (clear_map(&previous));
 	map->x = 0;
 	map->y = 0;
 	map->z = 0;
@@ -70,7 +70,10 @@ static int	populate_map(t_map **map, t_lines **line, t_map **link, size_t x)
 	if (ft_charpos((*line)->splits[x], ',') > 0)
 	{
 		if (!extractColor(map, (*line)->splits[x]))
+		{
+			clear_map(map);
 			return (0);
+		}
 	}
 	else
 		(*map)->z = ft_atoi((*line)->splits[x]);
@@ -99,11 +102,11 @@ t_map	*map_init(t_lines *line, t_map *map)
 		{
 			map = new_map(map, line->nlines, line->nsplits);
 			if (!map)
-				return (NULL);
+				return (clear_line_main(&line));
 			map->x = x;
 			map->y = y;
 			if (!populate_map(&map, &line, &link, x))
-				return (NULL);
+				return (clear_line_main(&line));
 			x++;
 		}
 		y++;
