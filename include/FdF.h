@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:46:06 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/25 22:27:43 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/26 14:01:16 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,17 @@ typedef struct s_map
 	int				wy;
 }	t_map;
 
+typedef struct s_brshm
+{
+	int	dx;
+	int	dy;
+	int	xi;
+	int	yi;
+	int	D;
+	int	x;
+	int	y;
+}	t_brshm;
+
 // init
 t_lmlx	*lmlx_init(void);
 
@@ -78,7 +89,8 @@ size_t  count_list(t_lines  *line);
 // draw map
 void	loop_draw(t_map *map, t_lmlx *lmlx);
 void	draw(t_map *map, t_lmlx *lmlx);
-void	bresenham(t_map *start, t_map *dest, t_lmlx *lmlx);
+int		bresenham(t_map *start, t_map *dest, t_lmlx *lmlx);
+
 
 // views
 t_map	*view_from_left(t_map *map, t_lmlx *lmlx);

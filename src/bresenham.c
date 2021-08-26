@@ -6,94 +6,104 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 10:12:47 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/25 23:20:41 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/26 14:01:33 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/FdF.h"
 
-void	bresenham_high(t_map *start, t_map *dest, t_lmlx *lmlx)
+t_brshm	*bresenham_init(void)
 {
-	int	dx;
-	int	dy;
-	int	xi;
-	int	D;
-	int	x;
-	int	y;
+	t_brshm	*bhm;
 
-	dx = dest->wx - start->wx;
-	dy = dest->wy - start->wy;
-	xi = 1;
-	if (dx < 0)
+	bhm = malloc(sizeof(t_brshm) * 1);
+	if (!bhm)
+		return (NULL);
+	bhm->dx = 0;
+	bhm->dy = 0;
+	bhm->xi = 0;
+	bhm->yi = 0;
+	bhm->D = 0;
+	bhm->x = 0;
+	bhm->y = 0;
+	return (bhm);
+}
+
+void	bresenham_high(t_map *start, t_map *dest, t_lmlx *lmlx, t_brshm *bhm)
+{
+	bhm->dx = dest->wx - start->wx;
+	bhm->dy = dest->wy - start->wy;
+	bhm->xi = 1;
+	if (bhm->dx < 0)
 	{
-		xi = -1;
-		dx = -dx;
+		bhm->xi = -1;
+		bhm->dx = -bhm->dx;
 	}
-	D = (2 * dx) - dy;
-	x = start->wx;
-	y = start->wy;
-	while (y <= dest->wy)
+	bhm->D = (2 * bhm->dx) - bhm->dy;
+	bhm->x = start->wx;
+	bhm->y = start->wy;
+	while (bhm->y <= dest->wy)
 	{
-		mlx_pixel_put(lmlx->mlx, lmlx->window, x, y, start->color);
-		if (D > 0)
+		mlx_pixel_put(lmlx->mlx, lmlx->window, bhm->x, bhm->y, start->color);
+		if (bhm->D > 0)
 		{
-			x += xi;
-			D = D + (2 * (dx - dy));
+			bhm->x += bhm->xi;
+			bhm->D = bhm->D + (2 * (bhm->dx - bhm->dy));
 		}
 		else
-			D += 2 * dx;
-		y++;
+			bhm->D += 2 * bhm->dx;
+		bhm->y++;
 	}
 }
 
-void	bresenham_low(t_map *start, t_map *dest, t_lmlx *lmlx)
+void	bresenham_low(t_map *start, t_map *dest, t_lmlx *lmlx, t_brshm *bhm)
 {
-	int	dx;
-	int	dy;
-	int	yi;
-	int	D;
-	int	x;
-	int	y;
-
-	dx = dest->wx - start->wx;
-	dy = dest->wy - start->wy;
-	yi = 1;
-	if (dy < 0)
+	bhm->dx = dest->wx - start->wx;
+	bhm->dy = dest->wy - start->wy;
+	bhm->yi = 1;
+	if (bhm->dy < 0)
 	{
-		yi = -1;
-		dy = -dy;
+		bhm->yi = -1;
+		bhm->dy = -bhm->dy;
 	}
-	D = (2 * dy) - dx;
-	y = start->wy;
-	x = start->wx;
-	while (x <= dest->wx)
+	bhm->D = (2 * bhm->dy) - bhm->dx;
+	bhm->y = start->wy;
+	bhm->x = start->wx;
+	while (bhm->x <= dest->wx)
 	{
-		mlx_pixel_put(lmlx->mlx, lmlx->window, x, y, start->color);
-		if (D > 0)
+		mlx_pixel_put(lmlx->mlx, lmlx->window, bhm->x, bhm->y, start->color);
+		if (bhm->D > 0)
 		{
-			y += yi;
-			D = D + (2 * (dy - dx));
+			bhm->y += bhm->yi;
+			bhm->D = bhm->D + (2 * (bhm->dy - bhm->dx));
 		}
 		else
-			D += 2 * dy;
-		x++;
+			bhm->D += 2 * bhm->dy;
+		bhm->x++;
 	}
 }
 
-void	bresenham(t_map *start, t_map *dest, t_lmlx *lmlx)
+int	bresenham(t_map *start, t_map *dest, t_lmlx *lmlx)
 {
+	t_brshm	*bhm;
+
+	bhm = bresenham_init();
+	if (!bhm)
+		return (0);
 	if (abs(dest->wy - start->wy) < abs(dest->wx - start->wx))
 	{
 		if (start->wx > dest->wx)
-			bresenham_low(dest, start, lmlx);
+			bresenham_low(dest, start, lmlx, bhm);
 		else
-			bresenham_low(start, dest, lmlx);
+			bresenham_low(start, dest, lmlx, bhm);
 	}
 	else
 	{
 		if (start->wy > dest->wy)
-			bresenham_high(dest, start, lmlx);
+			bresenham_high(dest, start, lmlx, bhm);
 		else
-			bresenham_high(start, dest, lmlx);
+			bresenham_high(start, dest, lmlx, bhm);
 	}
+	free(bhm);
+	return (1);
 }
