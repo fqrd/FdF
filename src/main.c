@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:48:25 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/26 14:19:58 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/08/26 15:30:43 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static t_lmlx	*lmlx_init(void)
 	lmlx = malloc(sizeof(t_lmlx) * 1);
 	if (!lmlx)
 		return (NULL);
-	lmlx->view = 2;
+	lmlx->view = 0;
 	lmlx->elevation = 1;
 	lmlx->distance = 5;
 	lmlx->angle = 0.56;
