@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 20:00:24 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/24 21:53:32 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/10/28 13:45:44 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ typedef struct s_list
 	size_t	end;
 }	t_list;
 
+char	*setValue(t_list **s, int res);
+char	*mfree(t_list **s, char *ret);
 char	*get_next_line(int fd);
+size_t	ft_strlen(const char *str);
 t_list	*new_status(t_list *s);
 int		find_char(t_list **s, char c);
 char	*substrjoin(t_list **s, size_t start, size_t end, size_t restlen);

@@ -6,13 +6,13 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 20:00:17 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/06 16:33:20 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/10/28 13:46:14 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/get_next_line.h"
 
-static char	*mfree(t_list **s, char *ret)
+char	*mfree(t_list **s, char *ret)
 {
 	if (*s)
 	{
@@ -29,16 +29,16 @@ static char	*mfree(t_list **s, char *ret)
 	return (ret);
 }
 
-static char	*action_on_buffer(t_list **s)
+static int	action_on_buffer(t_list **s)
 {
 	if (find_char(&*s, '\n'))
 	{
 		(*s)->line = substrjoin(&*s, (*s)->start, (++(*s)->end - (*s)->start),
 				ft_strlen((*s)->rest));
 		if (!(*s)->line)
-			return (mfree(&*s, NULL));
+			return (-1);
 		(*s)->start = (*s)->end;
-		return ((*s)->line);
+		return (1);
 	}
 	else
 	{
@@ -47,14 +47,14 @@ static char	*action_on_buffer(t_list **s)
 			(*s)->rest = substrjoin(&*s, (*s)->start,
 					((*s)->end - (*s)->start), ft_strlen((*s)->rest));
 			if (!(*s)->rest)
-				return (mfree(&*s, NULL));
+				return (-1);
 		}
 		(*s)->populated = 0;
-		return ("1");
+		return (0);
 	}
 }
 
-static char	*load_buffer(int fd, t_list **s)
+static int	load_buffer(int fd, t_list **s)
 {
 	int	res;
 
@@ -65,23 +65,26 @@ static char	*load_buffer(int fd, t_list **s)
 		(*s)->start = 0;
 		(*s)->end = 0;
 		(*s)->populated = 1;
-		return ("1");
+		return (0);
 	}
-	else if (res == 0 && (*s)->rest != NULL)
+	else if (res == 0)
 	{
-		(*s)->line = substrjoin(&*s, 0, 0,
-				ft_strlen((*s)->rest));
+		if ((*s)->rest != NULL)
+			(*s)->line = substrjoin(&*s, 0, 0,
+					ft_strlen((*s)->rest));
+		else
+			(*s)->line = substrjoin(&*s, 0, 0, 0);
 		if (!(*s)->line)
-			return (mfree(&*s, NULL));
-		return ((*s)->line);
+			return (-1);
+		return (1);
 	}
-	return (mfree(s, NULL));
+	return (-1);
 }
 
 char	*get_next_line(int fd)
 {
 	static t_list	*s[FOPEN_MAX];
-	char			*res;
+	int				res;
 
 	if (fd < 0 || fd > FOPEN_MAX || BUFFER_SIZE < 1)
 		return (NULL);
@@ -93,14 +96,14 @@ char	*get_next_line(int fd)
 		if (s[fd]->populated)
 		{
 			res = action_on_buffer(&s[fd]);
-			if (res == NULL || s[fd]->line != NULL)
-				return (res);
+			if (res != 0)
+				return (setValue(&s[fd], res));
 		}
 		else
 		{
 			res = load_buffer(fd, &s[fd]);
-			if (res == NULL || s[fd]->line != NULL)
-				return (mfree(&s[fd], res));
+			if (res != 0)
+				return (setValue(&s[fd], res));
 		}
 	}
 	return (mfree(&s[fd], NULL));
