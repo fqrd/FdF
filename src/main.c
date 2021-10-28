@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:48:25 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/26 20:51:41 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/10/28 14:41:31 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ static int	input_hook(int key, void *params)
 		action_right(lmlx);
 	else if (key == 65361)
 		action_left(lmlx);
-	else if (key == 108 || key == 107)
-		action_elevation(lmlx, key == 108);
-	else if (key == 112 || key == 111)
-		action_zoom(lmlx, key == 112);
-	else if (key == 104 || key == 106)
-		action_angle(lmlx, key == 104);
+	else if (key == 38 || key == 233)
+		action_elevation(lmlx, key == 38);
+	else if (key == 61 || key == 41)
+		action_zoom(lmlx, key == 61);
+	else if (key == 34 || key == 39)
+		action_angle(lmlx, key == 34);
 	else if (key == 65289)
 		action_rotation(lmlx);
 	return (0);
