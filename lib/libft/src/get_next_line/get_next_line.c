@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 20:00:17 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/10/28 13:46:14 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/10/28 19:16:23 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,13 @@ char	*get_next_line(int fd)
 		{
 			res = action_on_buffer(&s[fd]);
 			if (res != 0)
-				return (setValue(&s[fd], res));
+				return (set_value(&s[fd], res));
 		}
 		else
 		{
 			res = load_buffer(fd, &s[fd]);
 			if (res != 0)
-				return (setValue(&s[fd], res));
+				return (set_value(&s[fd], res));
 		}
 	}
 	return (mfree(&s[fd], NULL));
