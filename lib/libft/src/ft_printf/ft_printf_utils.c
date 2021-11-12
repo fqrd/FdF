@@ -6,11 +6,12 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/20 22:26:40 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/06 16:49:52 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/11/12 14:07:24 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ft_printf.h"
+
 int	print_num(long long nb, int n)
 {
 	if (nb < 10 && nb > -10)

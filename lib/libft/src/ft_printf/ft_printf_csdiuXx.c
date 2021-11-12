@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 15:28:39 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/06 16:35:03 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/11/12 14:07:03 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ void	ft_hexadecimal_number(va_list args, size_t **count, char format)
 {
 	unsigned int	x;
 	char			*base_x;
-	char			*base_X;
+	char			*base_capital_x;
 
 	base_x = "0123456789abcdef";
-	base_X = "0123456789ABCDEF";
+	base_capital_x = "0123456789ABCDEF";
 	x = va_arg(args, unsigned int);
 	if (format == 'x')
 		**count += to_hex_long((unsigned long long)x, base_x, 0);
 	else
-		**count += to_hex_long((unsigned long long)x, base_X, 0);
+		**count += to_hex_long((unsigned long long)x, base_capital_x, 0);
 }
