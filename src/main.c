@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 21:48:25 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/10/28 14:41:31 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/11/12 14:16:20 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static t_lmlx	*lmlx_init(void)
 	lmlx->distance = 5;
 	lmlx->angle = 0.56;
 	lmlx->height = atan(lmlx->angle) * lmlx->distance;
-	lmlx->baseX = (WINDOW_X / 2);
-	lmlx->baseY = (WINDOW_Y / 2);
+	lmlx->basex = (WINDOW_X / 2);
+	lmlx->basey = (WINDOW_Y / 2);
 	lmlx->flag_rotation = 1;
 	return (lmlx);
 }

@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 11:25:13 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/26 17:57:12 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/11/12 14:16:13 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ int	loop_draw(t_map *map, t_lmlx *lmlx)
 {
 	if (lmlx->flag_rotation)
 	{
-		lmlx->baseX = WINDOW_X / 2;
-		lmlx->baseY = WINDOW_Y / 2;
+		lmlx->basex = WINDOW_X / 2;
+		lmlx->basey = WINDOW_Y / 2;
 		if (lmlx->view == 0)
-			lmlx->baseY -= (map->max_x * lmlx->distance) / 2;
+			lmlx->basey -= (map->max_x * lmlx->distance) / 2;
 		if (lmlx->view == 1)
-			lmlx->baseX += (map->max_x * lmlx->distance);
+			lmlx->basex += (map->max_x * lmlx->distance);
 		if (lmlx->view == 2)
-			lmlx->baseY += (map->max_x * lmlx->distance) / 2;
+			lmlx->basey += (map->max_x * lmlx->distance) / 2;
 		if (lmlx->view == 3)
-			lmlx->baseX -= (map->max_x * lmlx->distance);
+			lmlx->basex -= (map->max_x * lmlx->distance);
 		lmlx->flag_rotation = 0;
 	}
 	while (map->next)

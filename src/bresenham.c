@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 10:12:47 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/26 17:52:43 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/11/12 14:14:33 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_brshm	*bhm_init(void)
 	bhm->dy = 0;
 	bhm->xi = 0;
 	bhm->yi = 0;
-	bhm->D = 0;
+	bhm->d = 0;
 	bhm->x = 0;
 	bhm->y = 0;
 	return (bhm);
@@ -39,19 +39,19 @@ static void	bhm_high(t_map *start, t_map *dest, t_lmlx *lmlx, t_brshm *bhm)
 		bhm->xi = -1;
 		bhm->dx = -bhm->dx;
 	}
-	bhm->D = (2 * bhm->dx) - bhm->dy;
+	bhm->d = (2 * bhm->dx) - bhm->dy;
 	bhm->x = start->wx;
 	bhm->y = start->wy;
 	while (bhm->y <= dest->wy)
 	{
 		mlx_pixel_put(lmlx->mlx, lmlx->window, bhm->x, bhm->y, start->color);
-		if (bhm->D > 0)
+		if (bhm->d > 0)
 		{
 			bhm->x += bhm->xi;
-			bhm->D = bhm->D + (2 * (bhm->dx - bhm->dy));
+			bhm->d = bhm->d + (2 * (bhm->dx - bhm->dy));
 		}
 		else
-			bhm->D += 2 * bhm->dx;
+			bhm->d += 2 * bhm->dx;
 		bhm->y++;
 	}
 }
@@ -66,19 +66,19 @@ static void	bhm_low(t_map *start, t_map *dest, t_lmlx *lmlx, t_brshm *bhm)
 		bhm->yi = -1;
 		bhm->dy = -bhm->dy;
 	}
-	bhm->D = (2 * bhm->dy) - bhm->dx;
+	bhm->d = (2 * bhm->dy) - bhm->dx;
 	bhm->y = start->wy;
 	bhm->x = start->wx;
 	while (bhm->x <= dest->wx)
 	{
 		mlx_pixel_put(lmlx->mlx, lmlx->window, bhm->x, bhm->y, start->color);
-		if (bhm->D > 0)
+		if (bhm->d > 0)
 		{
 			bhm->y += bhm->yi;
-			bhm->D = bhm->D + (2 * (bhm->dy - bhm->dx));
+			bhm->d = bhm->d + (2 * (bhm->dy - bhm->dx));
 		}
 		else
-			bhm->D += 2 * bhm->dy;
+			bhm->d += 2 * bhm->dy;
 		bhm->x++;
 	}
 }

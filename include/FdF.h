@@ -6,7 +6,7 @@
 /*   By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 11:46:06 by fcaquard          #+#    #+#             */
-/*   Updated: 2021/08/26 20:42:00 by fcaquard         ###   ########.fr       */
+/*   Updated: 2021/11/12 14:15:51 by fcaquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ typedef struct s_lmlx
 	int				distance;
 	double			height;
 	double			angle;
-	int				baseX;
-	int				baseY;
+	int				basex;
+	int				basey;
 	int				flag_rotation;
 }	t_lmlx;
 
@@ -73,7 +73,7 @@ typedef struct s_brshm
 	int	dy;
 	int	xi;
 	int	yi;
-	int	D;
+	int	d;
 	int	x;
 	int	y;
 }	t_brshm;
