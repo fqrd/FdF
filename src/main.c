@@ -60,9 +60,8 @@ int	main(int argc, char **argv)
 {
 	t_lmlx	*lmlx;
 
-	(void)argc;
-	// if (argc != 2)
-	// 	return (0);
+	if (argc != 2)
+		return (0);
 	lmlx = lmlx_init();
 	if (!lmlx)
 		return (0);
