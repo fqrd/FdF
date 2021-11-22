@@ -17,23 +17,23 @@ static int	input_hook(int key, void *params)
 	t_lmlx	*lmlx;
 
 	lmlx = (t_lmlx *)params;
-	if (key == 65307)
+	if (key == 65307 || key == 53)
 		input_esc(lmlx);
-	else if (key == 65362)
+	else if (key == 65362 || key == 126)
 		action_up(lmlx);
-	else if (key == 65364)
+	else if (key == 65364 || key == 125)
 		action_down(lmlx);
-	else if (key == 65363)
+	else if (key == 65363 || key == 124)
 		action_right(lmlx);
-	else if (key == 65361)
+	else if (key == 65361 || key == 123)
 		action_left(lmlx);
-	else if (key == 38 || key == 233)
-		action_elevation(lmlx, key == 38);
-	else if (key == 61 || key == 41)
-		action_zoom(lmlx, key == 61);
-	else if (key == 34 || key == 39)
-		action_angle(lmlx, key == 34);
-	else if (key == 65289)
+	else if (key == 38 || key == 233 || key == 18 || key == 19)
+		action_elevation(lmlx, (key == 38 || key == 18));
+	else if (key == 61 || key == 41 || key == 24 || key == 27)
+		action_zoom(lmlx, (key == 63 || key == 24));
+	else if (key == 34 || key == 39 || key == 20 || key == 21)
+		action_angle(lmlx, (key == 34 || key == 20));
+	else if (key == 65289 || key == 48)
 		action_rotation(lmlx);
 	return (0);
 }
@@ -60,8 +60,9 @@ int	main(int argc, char **argv)
 {
 	t_lmlx	*lmlx;
 
-	if (argc != 2)
-		return (0);
+	(void)argc;
+	// if (argc != 2)
+	// 	return (0);
 	lmlx = lmlx_init();
 	if (!lmlx)
 		return (0);

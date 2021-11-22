@@ -16,6 +16,7 @@ size_t	ft_intlen(long long d)
 {
 	size_t	i;
 
+	i = 0;
 	while (d > 10 || d < -10)
 	{
 		d /= 10;

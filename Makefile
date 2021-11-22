@@ -12,12 +12,14 @@
 
 # gcc src/*.c -L./libs/minilibx-linux -lmlx -lXext -lX11 -lbsd -L./libs/_libft -lft -lm && ./a.out
 
-CC = cc
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 SRC_FOLDER = ./src/
 
 PATH_LIBS = ./lib/
 LMLX = $(PATH_LIBS)minilibx-linux
+LMLX_MACOS = $(PATH_LIBS)minilibx_macos
+LMLX_MACOS_SIERRA = $(PATH_LIBS)minilibx_mms_20191025_beta
 LFT = $(PATH_LIBS)libft
 NAME = fdf
 
@@ -35,8 +37,16 @@ SRCS = \
 
 OBJS = $(SRCS:.c=.o)
 
-all :  makemlx makelft
+all: $(NAME)
+
+$(NAME):  mlxmacos makelibft
+	$(CC) $(CFLAGS) $(SRCS) -L$(LFT) -lft $(LMLX_MACOS)/libmlx.a -lm -framework OpenGL -framework AppKit -o $(NAME)
+
+linux :  mlxlinux makelibft
 	$(CC) $(CFLAGS) $(SRCS) -L$(LMLX) -lmlx -lXext -lX11 -lbsd -lm -L$(LFT) -lft -o $(NAME)
+
+sierra: mlxsierra makelibft
+	$(CC) $(CFLAGS) $(SRCS) -L$(LFT) -lft $(LMLX_MACOS)/libmlx.a -lm -framework OpenGL -framework AppKit -o $(NAME)
 
 clean:
 	rm -f $(SRC_FOLDER)*.o
@@ -44,20 +54,33 @@ clean:
 fclean: clean
 	rm -f ./$(NAME)
 
-re: cleanlibs fclean all
+re: cleanlibft fclean all
 
-makelft: 
-	cd $(LFT) && $(MAKE)
-	
-makemlx:
+mlxlinux:
 	cd $(LMLX) && $(MAKE)
 
-cleanlibs: cleanlft cleanmlx
+mlxmacos:
+	cd $(LMLX_MACOS) && $(MAKE)
 
-cleanmlx:
+mlxsierra:
+	cd $(LMLX_MACOS_SIERRA) && $(MAKE)
+
+makelibft: 
+	cd $(LFT) && $(MAKE)
+
+cleanlibs: cleanlibft cleanmacos cleansierra cleanlinux 
+
+cleanlinux:
 	cd $(LMLX) && $(MAKE) clean
 
-cleanlft:
+cleanmacos:
+	cd $(LMLX_MACOS) && $(MAKE) clean
+
+cleansierra:
+	cd $(LMLX_MACOS_SIERRA) && $(MAKE) clean
+
+cleanlibft:
 	cd $(LFT) && $(MAKE) fclean
 
-.PHONY: clean fclean re all makemlx makelft cleanlibs cleanlft cleanmlx
+.PHONY: clean fclean re all mlxlinux mlxmacos mlxsierra makelibft \
+		cleanlibs cleanlinux cleanmacos cleansierra cleanlibft
