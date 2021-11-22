@@ -10,12 +10,9 @@
 #                                                                              #
 # **************************************************************************** #
 
-# gcc src/*.c -L./libs/minilibx-linux -lmlx -lXext -lX11 -lbsd -L./libs/_libft -lft -lm && ./a.out
-
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 SRC_FOLDER = ./src/
-
 PATH_LIBS = ./lib/
 LMLX = $(PATH_LIBS)minilibx-linux
 LMLX_MACOS = $(PATH_LIBS)minilibx_macos
