@@ -6,7 +6,7 @@
 #    By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/01 14:30:44 by fcaquard          #+#    #+#              #
-#    Updated: 2021/08/26 16:49:51 by fcaquard         ###   ########.fr        #
+#    Updated: 2021/11/23 15:53:53 by fcaquard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,10 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 SRC_FOLDER = ./src/
 PATH_LIBS = ./lib/
-LMLX = $(PATH_LIBS)minilibx-linux
+LMLX_LINUX = $(PATH_LIBS)minilibx-linux
 LMLX_MACOS = $(PATH_LIBS)minilibx_macos
-LMLX_MACOS_SIERRA = $(PATH_LIBS)minilibx_mms_20191025_beta
+FRAMEWORKS = -framework OpenGL -framework AppKit
+
 LFT = $(PATH_LIBS)libft
 NAME = fdf
 
@@ -35,15 +36,12 @@ SRCS = \
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
+	
+$(NAME):	$(OBJS) makelibft mlxmacos
+	$(CC) $(CFLAGS) $(OBJS) -L$(LFT) -lft $(LMLX_MACOS)/libmlx.a -lm $(FRAMEWORKS) -o $(NAME)
 
-$(NAME):  mlxmacos makelibft
-	$(CC) $(CFLAGS) $(SRCS) -L$(LFT) -lft $(LMLX_MACOS)/libmlx.a -lm -framework OpenGL -framework AppKit -o $(NAME)
-
-linux :  mlxlinux makelibft
-	$(CC) $(CFLAGS) $(SRCS) -L$(LMLX) -lmlx -lXext -lX11 -lbsd -lm -L$(LFT) -lft -o $(NAME)
-
-sierra: mlxsierra makelibft
-	$(CC) $(CFLAGS) $(SRCS) -L$(LFT) -lft $(LMLX_MACOS)/libmlx.a -lm -framework OpenGL -framework AppKit -o $(NAME)
+linux:	$(OBJS) makelibft mlxlinux
+	$(CC) $(CFLAGS) $(OBJS) -L$(LFT) -lft -L$(LMLX_LINUX) -lmlx -lXext -lX11 -lbsd -lm  -o $(NAME)
 
 clean:
 	rm -f $(SRC_FOLDER)*.o
@@ -51,7 +49,23 @@ clean:
 fclean: clean
 	rm -f ./$(NAME)
 
-re: cleanlibft fclean all
+# reset compilation on different OS (default macos)
+
+re: reset cleanmacos all
+
+relinux: reset cleanlinux linux
+
+reset: cleanlibft fclean
+
+# compiles & clean libft
+
+makelibft: 
+	cd $(LFT) && $(MAKE)
+
+cleanlibft:
+	cd $(LFT) && $(MAKE) fclean
+
+# compiles mlx libs on different OS
 
 mlxlinux:
 	cd $(LMLX) && $(MAKE)
@@ -59,25 +73,13 @@ mlxlinux:
 mlxmacos:
 	cd $(LMLX_MACOS) && $(MAKE)
 
-mlxsierra:
-	cd $(LMLX_MACOS_SIERRA) && $(MAKE)
+# clean mlx on different OS
 
-makelibft: 
-	cd $(LFT) && $(MAKE)
-
-cleanlibs: cleanlibft cleanmacos cleansierra cleanlinux 
-
-cleanlinux:
+cleanlinux: cleanlibft fclean
 	cd $(LMLX) && $(MAKE) clean
 
-cleanmacos:
+cleanmacos: cleanlibft fclean
 	cd $(LMLX_MACOS) && $(MAKE) clean
 
-cleansierra:
-	cd $(LMLX_MACOS_SIERRA) && $(MAKE) clean
-
-cleanlibft:
-	cd $(LFT) && $(MAKE) fclean
-
 .PHONY: clean fclean re all mlxlinux mlxmacos mlxsierra makelibft \
-		cleanlibs cleanlinux cleanmacos cleansierra cleanlibft
+		cleanlinux cleanmacos cleansierra cleanlibft
