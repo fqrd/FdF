@@ -6,7 +6,7 @@
 #    By: fcaquard <fcaquard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/01 14:30:44 by fcaquard          #+#    #+#              #
-#    Updated: 2021/11/23 15:53:53 by fcaquard         ###   ########.fr        #
+#    Updated: 2021/11/23 15:59:17 by fcaquard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,6 @@ PATH_LIBS = ./lib/
 LMLX_LINUX = $(PATH_LIBS)minilibx-linux
 LMLX_MACOS = $(PATH_LIBS)minilibx_macos
 FRAMEWORKS = -framework OpenGL -framework AppKit
-
 LFT = $(PATH_LIBS)libft
 NAME = fdf
 
@@ -40,17 +39,18 @@ all: $(NAME)
 $(NAME):	$(OBJS) makelibft mlxmacos
 	$(CC) $(CFLAGS) $(OBJS) -L$(LFT) -lft $(LMLX_MACOS)/libmlx.a -lm $(FRAMEWORKS) -o $(NAME)
 
-linux:	$(OBJS) makelibft mlxlinux
+linux:		$(OBJS) makelibft mlxlinux
 	$(CC) $(CFLAGS) $(OBJS) -L$(LFT) -lft -L$(LMLX_LINUX) -lmlx -lXext -lX11 -lbsd -lm  -o $(NAME)
 
+# clean sources
 clean:
 	rm -f $(SRC_FOLDER)*.o
 
+# clean sources && binary
 fclean: clean
 	rm -f ./$(NAME)
 
 # reset compilation on different OS (default macos)
-
 re: reset cleanmacos all
 
 relinux: reset cleanlinux linux
@@ -58,7 +58,6 @@ relinux: reset cleanlinux linux
 reset: cleanlibft fclean
 
 # compiles & clean libft
-
 makelibft: 
 	cd $(LFT) && $(MAKE)
 
@@ -66,20 +65,18 @@ cleanlibft:
 	cd $(LFT) && $(MAKE) fclean
 
 # compiles mlx libs on different OS
-
 mlxlinux:
 	cd $(LMLX) && $(MAKE)
 
 mlxmacos:
 	cd $(LMLX_MACOS) && $(MAKE)
 
-# clean mlx on different OS
-
+# clean all on different OS
 cleanlinux: cleanlibft fclean
 	cd $(LMLX) && $(MAKE) clean
 
 cleanmacos: cleanlibft fclean
 	cd $(LMLX_MACOS) && $(MAKE) clean
 
-.PHONY: clean fclean re all mlxlinux mlxmacos mlxsierra makelibft \
-		cleanlinux cleanmacos cleansierra cleanlibft
+.PHONY: all linux clean fclean re relinux reset makelibft cleanlibft \
+		mlxlinux mlxmacos cleanlinux cleanmacos
